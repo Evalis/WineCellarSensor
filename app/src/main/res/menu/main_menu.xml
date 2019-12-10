@@ -6,9 +6,5 @@
     <item android:id="@+id/reload"
         android:icon="@drawable/ic_reload"
         android:title="@string/app_reload"
-        app:showAsAction = "ifRoom|collapseActionView"
-        app:actionViewClass="android.widget.SearchView"/>
-
-
-
+        app:showAsAction = "ifRoom|collapseActionView" />
 </menu>
