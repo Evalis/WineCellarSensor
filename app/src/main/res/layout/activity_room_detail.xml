@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e4e4e4"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/container1"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#e4e4e4"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/roomName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ellipsize="marquee"
+            android:fontFamily="cursive"
+            android:text="Item1"
+            android:textColor="@color/colorToolbar"
+            android:textSize="35sp" />
+    </LinearLayout>
+
+    <TableLayout
+        android:id="@+id/simpleTableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="491dp"
+        android:background="#ffff"
+        android:stretchColumns="*">
+
+        <TableRow
+            android:id="@+id/valueRow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/co2"
+                android:layout_width="252dp"
+                android:layout_height="100dp"
+                android:padding="18dip"
+                android:text="Text 1"
+                android:textColor="#000"
+                android:textSize="22dp" />
+
+            <ImageView
+                android:id="@+id/ImageView01"
+                android:layout_width="22dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|left"
+                android:layout_margin="5dp"
+                android:src="@drawable/co2" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/valueRow2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/humidity"
+                android:layout_width="252dp"
+                android:layout_height="100dp"
+                android:padding="18dip"
+                android:text="Text 2"
+                android:textColor="#000"
+                android:textSize="22dp" />
+
+            <ImageView
+                android:id="@+id/ImageView02"
+                android:layout_width="82dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|left"
+                android:layout_margin="5dp"
+                android:src="@drawable/humidity" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/valueRow3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/temperature"
+                android:layout_width="252dp"
+                android:layout_height="100dp"
+                android:padding="18dip"
+                android:text="Text 3"
+                android:textColor="#000"
+                android:textSize="22dp" />
+
+            <ImageView
+                android:id="@+id/ImageView03"
+                android:layout_width="13dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|left"
+                android:layout_margin="5dp"
+                android:src="@drawable/temp" />
+        </TableRow>
+    </TableLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+    <Button
+        android:id="@+id/btn_Statistics"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/btn_login"
+        android:onClick="showStatistics"
+        android:text="Statistics"
+        android:textColor="@color/colorWhite" />
+
+    <Button
+        android:id="@+id/btn_Settings"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_login"
+        android:onClick="showSettings"
+        android:text="Settings"
+        android:textColor="@color/colorWhite" />
+</LinearLayout>
+</LinearLayout>
