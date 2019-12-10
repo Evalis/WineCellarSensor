@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="checkBox">com.example.winecellarsensor.view.checkBox</string>
+    <string name="id">com.example.winecellarsensor.view.id</string>
+    <string name="app_home">Home</string>
+    <string name="app_statistic">Statistics</string>
+    <string name="app_notification">Notifications</string>
+    <string name="app_reload">Reload</string>
+    <string name="app_percentage">%</string>
+</resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffff">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="80dp"
+        android:text="Login"
+        android:fontFamily="cursive"
+        android:textAlignment="center"
+        android:textColor="@color/colorDark"
+        android:textSize="70dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:text="Please Login to continue"
+        android:textAlignment="center"
+        android:textColor="@color/colorDark"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cellar ID"
+        android:textColor="@color/colorDark"
+        android:textSize="18dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="8dp"/>
+
+    <EditText
+        android:id="@+id/cellarID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textColor="@color/colorWhite"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_login"
+        android:onClick="authenticationCellarID"/>
+
+
+</LinearLayout>
