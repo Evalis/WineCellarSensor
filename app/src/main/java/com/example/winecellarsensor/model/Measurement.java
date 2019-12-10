@@ -4,6 +4,8 @@ package com.example.winecellarsensor.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class Measurement {
 
     @SerializedName("M_ID")
@@ -11,7 +13,7 @@ public class Measurement {
     private String mID;
     @SerializedName("DateInserted")
     @Expose
-    private String dateInserted;
+    private Date dateInserted;
     @SerializedName("DataType")
     @Expose
     private String dataType;
@@ -30,11 +32,11 @@ public class Measurement {
         this.mID = mID;
     }
 
-    public String getDateInserted() {
+    public Date getDateInserted() {
         return dateInserted;
     }
 
-    public void setDateInserted(String dateInserted) {
+    public void setDateInserted(Date dateInserted) {
         this.dateInserted = dateInserted;
     }
 

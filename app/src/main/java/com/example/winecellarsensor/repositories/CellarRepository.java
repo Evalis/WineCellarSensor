@@ -45,7 +45,7 @@ public class CellarRepository {
                 Log.i("Retrofit", "Response received " + response.code() + ", "+ response.message() + ", "+ response.body() + ", "+ response.errorBody() + ", "+ response.headers() + ", "+ response.raw());
                 if (response.code() == 200) {
                     Log.i("Retrofit", "Good response");
-                    Log.i("retrofit", "" + response.body().getWineCellars().get(0));
+                    Log.i("retrofit", "" + response.body().getWineCellars().get(0).getSensorList().get(0).getListOfMeasure().get(0).getDateInserted());
                     wineCellars.setValue(response.body().getWineCellars());
                 }
             }
