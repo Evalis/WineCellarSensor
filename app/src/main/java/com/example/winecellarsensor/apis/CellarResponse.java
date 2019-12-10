@@ -1,17 +1,19 @@
 package com.example.winecellarsensor.apis;
 
-import com.example.winecellarsensor.model.Cellar;
+import com.example.winecellarsensor.model.WineCellar;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class CellarResponse {
 
-    @SerializedName("cellar")
+    @SerializedName("WineCellars")
     @Expose
-    private Cellar cellar = null;
+    private List<WineCellar> wineCellars = null;
 
-    public Cellar getCellar() {
-        return cellar;
+    public List<WineCellar> getWineCellars() {
+        return wineCellars;
     }
 
 }

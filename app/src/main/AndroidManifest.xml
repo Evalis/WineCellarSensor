@@ -13,6 +13,8 @@
         android:theme="@style/AppTheme"
         >
         <activity android:name=".view.MainActivity"/>
+        <activity android:name=".view.Statistics"/>
+
         <activity android:name=".view.LoginActivity"/>
         <activity android:name=".view.WelcomeActivity">
             <intent-filter>

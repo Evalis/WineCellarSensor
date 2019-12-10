@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CellarServiceGenerator {
 
     private static Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
-            .baseUrl("http://10.152.222.33:8080/")
+            .baseUrl("http://sep4.gear.host/")
             .addConverterFactory(GsonConverterFactory.create());
 
     private static Retrofit retrofit = retrofitBuilder.build();

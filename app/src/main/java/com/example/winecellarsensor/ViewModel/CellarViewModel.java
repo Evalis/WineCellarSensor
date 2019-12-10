@@ -1,8 +1,12 @@
 package com.example.winecellarsensor.ViewModel;
 
 import android.app.Application;
-import com.example.winecellarsensor.model.Cellar;
+
+import com.example.winecellarsensor.model.WineCellar;
 import com.example.winecellarsensor.repositories.CellarRepository;
+
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -16,13 +20,13 @@ public class CellarViewModel extends AndroidViewModel {
         repository = CellarRepository.getInstance(application);
     }
 
-    public LiveData<Cellar> getCellar() {
+    public LiveData<List<WineCellar>> getCellar() {
 
         return repository.getCellar();
     }
 
-    public void updateCellar() {
+    public void updateCellar(String cellarID) {
 
-        repository.updateCellar();
+        repository.updateCellar(cellarID);
     }
 }

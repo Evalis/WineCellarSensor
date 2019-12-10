@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,7 +16,6 @@ import com.example.winecellarsensor.ViewModel.CellarViewModel;
 import com.example.winecellarsensor.fragments.HomeFragment;
 import com.example.winecellarsensor.fragments.NotificationsFragment;
 import com.example.winecellarsensor.fragments.StatisticsFragment;
-import com.example.winecellarsensor.model.Cellar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         cellarViewModel = ViewModelProviders.of(this).get(CellarViewModel.class);
-        cellarViewModel.updateCellar();
+        SharedPreferences prefs = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        String id = prefs.getString("cellarID", null);
+        cellarViewModel.updateCellar(id);
 
         Toolbar toolbar = findViewById(R.id.tool);
         setSupportActionBar(toolbar);

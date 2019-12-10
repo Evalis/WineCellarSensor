@@ -5,21 +5,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.example.winecellarsensor.R;
-import com.example.winecellarsensor.model.Cellar;
-import com.example.winecellarsensor.model.Room;
+import com.example.winecellarsensor.model.Sensor;
+import com.example.winecellarsensor.model.WineCellar;
+import java.util.ArrayList;
+import java.util.List;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
 
     public interface OnListItemClickListener {
-        void onListItemClick(Room room);
+        void onListItemClick(String room);
     }
 
-    private Cellar cellar;
+    private WineCellar cellar;
+    private List<String> rooms;
     final private OnListItemClickListener mOnListItemClickListener;
 
     public RoomAdapter(OnListItemClickListener listener) {
         mOnListItemClickListener = listener;
+        rooms = new ArrayList<String>();
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -29,29 +33,59 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
     }
 
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-        viewHolder.roomName.setText(cellar.getRooms().get(position).getRoomName());
-        viewHolder.co2.setText(cellar.getRooms().get(position).getMeasurements().getCo2().get(position).getValue().toString());
-        viewHolder.temperature.setText(cellar.getRooms().get(position).getMeasurements().getTemperature().get(position).getValue().toString());
-        viewHolder.humidity.setText(cellar.getRooms().get(position).getMeasurements().getHumidity().get(position).getValue().toString());
+        viewHolder.roomName.setText(rooms.get(position));
+        viewHolder.co2.setText(getMeasurementValue(rooms.get(position),"CO2"));
+       viewHolder.temperature.setText(getMeasurementValue(rooms.get(position),"Temperature"));
+        viewHolder.humidity.setText(getMeasurementValue(rooms.get(position),"Humidity"));
     }
 
+    private String getMeasurementValue(String roomLocation, String type)
+    {
+        String measurement = "";
+
+        List<Sensor> sensorList = this.cellar.getSensorList();
+        for (Sensor sensor: sensorList) {
+              if (sensor.getRoomLocation().equals(roomLocation) && sensor.getSensorname().equals(type))
+              {
+                  measurement = sensor.getListOfMeasure().get(0).getDataValue();
+              }
+        }
+        return measurement;
+
+    }
+
+
     public int getItemCount() {
-        if(cellar == null)
+        if(rooms == null)
         {
             return 0;
         }
-        return cellar.getRooms().size();
+        return rooms.size();
     }
 
-    public void setCellar(Cellar cellar)
+    public void setCellar(WineCellar cellar)
     {
         this.cellar = cellar;
+        // extract rooms for cellar
+        extractRooms();
         notifyDataSetChanged();
     }
 
-    public Room getRoomAt(int position)
+    private void extractRooms()
     {
-        return cellar.getRooms().get(position);
+        List<Sensor> sensorList = this.cellar.getSensorList();
+        for (Sensor sensor: sensorList) {
+            String roomLocation =sensor.getRoomLocation();
+            if(!rooms.contains(roomLocation))
+            {
+                rooms.add(roomLocation);
+            }
+        }
+    }
+
+    public String getRoomAt(int position)
+    {
+        return rooms.get(position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -70,7 +104,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
 
         @Override
         public void onClick(View view) {
-           mOnListItemClickListener.onListItemClick(cellar.getRooms().get(getAdapterPosition()));
+           mOnListItemClickListener.onListItemClick(rooms.get(getAdapterPosition()));
         }
     }
 }
