@@ -11,7 +11,7 @@ import com.example.winecellarsensor.ViewModel.CellarViewModel;
 import com.example.winecellarsensor.model.WineCellar;
 import com.example.winecellarsensor.view.MainActivity;
 import com.example.winecellarsensor.view.RoomAdapter;
-import com.example.winecellarsensor.view.Statistics;
+import com.example.winecellarsensor.view.RoomDetail;
 
 import java.util.List;
 
@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment implements RoomAdapter.OnListItemClic
     }
 
     public void onListItemClick(String room) {
-        Intent intent = new Intent(c, Statistics.class);
+        Intent intent = new Intent(c, RoomDetail.class);
         intent.putExtra("Room", room);
         startActivity(intent);
     }

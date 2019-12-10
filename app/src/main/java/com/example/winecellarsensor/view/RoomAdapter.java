@@ -105,6 +105,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
         @Override
         public void onClick(View view) {
            mOnListItemClickListener.onListItemClick(rooms.get(getAdapterPosition()));
+
         }
     }
 }

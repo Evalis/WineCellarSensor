@@ -40,6 +40,7 @@
         android:id="@+id/cellarID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorDark"
         android:layout_marginLeft="8dp" />
 
     <Button
