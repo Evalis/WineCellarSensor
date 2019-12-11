@@ -14,7 +14,7 @@ import com.example.winecellarsensor.R;
 import com.example.winecellarsensor.ViewModel.CellarViewModel;
 import com.example.winecellarsensor.fragments.HomeFragment;
 import com.example.winecellarsensor.fragments.NotificationsFragment;
-import com.example.winecellarsensor.fragments.StatisticsFragment;
+import com.example.winecellarsensor.fragments.ContactFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_home:
                         selectedFragment = new HomeFragment(MainActivity.this,cellarViewModel);
                         break;
-                    case R.id.nav_statistics:
-                        selectedFragment = new StatisticsFragment();
+                    case R.id.nav_contact:
+                        selectedFragment = new ContactFragment();
                         break;
                     case R.id.nav_notifications:
                         selectedFragment = new NotificationsFragment();
