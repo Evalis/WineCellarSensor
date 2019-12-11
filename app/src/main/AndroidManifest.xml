@@ -15,7 +15,8 @@
         <activity android:name=".view.MainActivity"/>
         <activity android:name=".view.RoomDetail"/>
         <activity android:name=".view.LoginActivity"/>
-        <activity android:name=".view.StatisticsActivity"/>
+        <activity android:name=".view.StatisticsActivity"
+            android:parentActivityName=".view.RoomDetail"/>
         <activity android:name=".view.SettingsActivity"/>
         <activity android:name=".view.WelcomeActivity">
             <intent-filter>

@@ -19,8 +19,8 @@ public class RoomDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_detail);
 
-        buttonSettings = findViewById(R.id.btn_Statistics);
-        buttonStatistics = findViewById(R.id.btn_Settings);
+        buttonSettings = findViewById(R.id.btn_Settings);
+        buttonStatistics = findViewById(R.id.btn_Statistics);
 
         buttonStatistics.setOnClickListener(new View.OnClickListener() {
             @Override
