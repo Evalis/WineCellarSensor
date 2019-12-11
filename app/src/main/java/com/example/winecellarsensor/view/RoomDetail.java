@@ -1,6 +1,8 @@
 package com.example.winecellarsensor.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.winecellarsensor.R;
 
@@ -14,5 +16,15 @@ public class RoomDetail extends AppCompatActivity {
         setContentView(R.layout.activity_room_detail);
 
 
+    }
+
+    public void showStatistics(View view) {
+        Intent i = new Intent(RoomDetail.this, StatisticsActivity.class);
+        startActivity(i);
+    }
+
+    public void showSettings(View view) {
+        Intent i = new Intent(RoomDetail.this, SettingsActivity.class);
+        startActivity(i);
     }
 }
