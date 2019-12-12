@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.tool);
         setSupportActionBar(toolbar);
 
+
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
@@ -47,14 +49,14 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 switch (menuItem.getItemId()) {
-                    case R.id.nav_home:
-                        selectedFragment = new HomeFragment(MainActivity.this,cellarViewModel);
+                    case 0:
+                        new HomeFragment(MainActivity.this,cellarViewModel);
                         break;
-                    case R.id.nav_contact:
-                        selectedFragment = new ContactFragment();
+                    case 1:
+                        new ContactFragment();
                         break;
-                    case R.id.nav_notifications:
-                        selectedFragment = new NotificationsFragment();
+                    case 2:
+                        new NotificationsFragment();
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();

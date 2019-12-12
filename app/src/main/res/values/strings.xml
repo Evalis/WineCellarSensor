@@ -8,4 +8,7 @@
     <string name="app_reload">Reload</string>
     <string name="app_percentage">%</string>
     <string name="contact">Contact</string>
+    <string name="app_daily">Daily</string>
+    <string name="app_weekly">Weekly</string>
+    <string name="app_monthly">Monthly</string>
 </resources>
