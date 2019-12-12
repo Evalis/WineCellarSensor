@@ -6,29 +6,27 @@
     android:background="#e4e4e4"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/container1"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="#e4e4e4"
-        android:orientation="horizontal">
+    <include layout="@layout/activity_toolbar"
+        android:id="@+id/tool" />
+
 
         <TextView
             android:id="@+id/roomName"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:ellipsize="marquee"
+            android:padding="35dp"
             android:fontFamily="cursive"
             android:text="Item1"
             android:textColor="@color/colorToolbar"
             android:textSize="35sp" />
-    </LinearLayout>
+
 
     <TableLayout
         android:id="@+id/simpleTableLayout"
         android:layout_width="match_parent"
-        android:layout_height="491dp"
+        android:layout_margin="15dp"
+        android:layout_height="wrap_content"
         android:background="#ffff"
         android:stretchColumns="*">
 
@@ -110,30 +108,31 @@
                 android:src="@drawable/temp" />
         </TableRow>
     </TableLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="15dp"
+        android:gravity="center">
     <Button
         android:id="@+id/btn_Statistics"
         android:layout_width="160dp"
+        android:layout_marginRight="10dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
         android:background="@drawable/btn_login"
         android:onClick="showStatistics"
-        android:text="Statistics"
+        android:text="@string/statistics"
         android:textColor="@color/colorWhite" />
 
     <Button
         android:id="@+id/btn_Settings"
         android:layout_width="160dp"
+        android:layout_marginLeft="10dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="20dp"
         android:background="@drawable/btn_login"
         android:onClick="showSettings"
-        android:text="Settings"
+        android:text="@string/settings"
         android:textColor="@color/colorWhite" />
-</LinearLayout>
+    </LinearLayout>
 </LinearLayout>

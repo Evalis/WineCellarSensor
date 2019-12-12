@@ -11,4 +11,6 @@
     <string name="app_daily">Daily</string>
     <string name="app_weekly">Weekly</string>
     <string name="app_monthly">Monthly</string>
+    <string name="statistics">Statistics</string>
+    <string name="settings">Settings</string>
 </resources>
