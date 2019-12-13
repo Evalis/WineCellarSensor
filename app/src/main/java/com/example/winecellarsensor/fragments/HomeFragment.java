@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.winecellarsensor.R;
 import com.example.winecellarsensor.ViewModel.CellarViewModel;
+import com.example.winecellarsensor.model.Room;
 import com.example.winecellarsensor.model.WineCellar;
 import com.example.winecellarsensor.view.MainActivity;
 import com.example.winecellarsensor.adapters.RoomAdapter;
@@ -51,17 +52,19 @@ public class HomeFragment extends Fragment implements RoomAdapter.OnListItemClic
         roomRecyclerView.setAdapter(roomAdapter);
 
 
-        cellarViewModel.getCellar().observe(this.getActivity(), new Observer<List<WineCellar>>() {
+        cellarViewModel.getRooms().observe(this.getActivity(), new Observer<List<Room>>() {
             @Override
-            public void onChanged(List<WineCellar> cellars) {
-                roomAdapter.setCellar(cellars.get(0));
+            public void onChanged(List<Room> rooms) {
+                roomAdapter.setRooms(rooms);
             }
         });
 
         return rootView;
     }
 
-    public void onListItemClick(String room) {
+
+    @Override
+    public void onListItemClick(Room room) {
         Intent intent = new Intent(c, RoomDetail.class);
         intent.putExtra("Room", room);
         startActivity(intent);

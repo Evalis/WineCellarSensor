@@ -11,7 +11,7 @@ import android.widget.EditText;
 
 import com.example.winecellarsensor.R;
 import com.example.winecellarsensor.ViewModel.CellarViewModel;
-import com.example.winecellarsensor.model.WineCellar;
+import com.example.winecellarsensor.model.Room;
 
 import java.util.List;
 
@@ -59,17 +59,17 @@ public class LoginActivity extends AppCompatActivity {
 
         //verify if  cellar id exist
         cellarViewModel.updateCellar(mCellarID.getText().toString());
-        cellarViewModel.getCellar().observe(this, new Observer<List<WineCellar>>() {
+        cellarViewModel.getRooms().observe(this, new Observer<List<Room>>() {
             @Override
-            public void onChanged(List<WineCellar> cellars) {
-                if(mCellarID.getText().toString().equals(cellars.get(0).getCellarID()))
+            public void onChanged(List<Room> rooms) {
+                if(rooms != null || rooms.size() > 0)
                 {
                     SharedPreferences prefs = getSharedPreferences("MyPreferences", MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("cellarID", mCellarID.getText().toString());
                     editor.apply();
 
-                    cellarViewModel.getCellar().removeObserver(this);
+                    cellarViewModel.getRooms().removeObserver(this);
 
                     initMainActivity();
                 }
