@@ -1,11 +1,12 @@
-package com.example.winecellarsensor.fragments;
+package com.example.winecellarsensor.adapters;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.example.winecellarsensor.R;
+import com.example.winecellarsensor.fragments.DailyFragment;
+import com.example.winecellarsensor.fragments.MonthlyFragment;
+import com.example.winecellarsensor.fragments.WeeklyFragment;
 
 public class StatisticsFragmentAdapter extends FragmentStatePagerAdapter {
 

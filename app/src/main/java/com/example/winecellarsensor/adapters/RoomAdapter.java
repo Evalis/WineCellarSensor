@@ -1,4 +1,4 @@
-package com.example.winecellarsensor.view;
+package com.example.winecellarsensor.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;

@@ -10,7 +10,7 @@ import com.example.winecellarsensor.R;
 import com.example.winecellarsensor.ViewModel.CellarViewModel;
 import com.example.winecellarsensor.model.WineCellar;
 import com.example.winecellarsensor.view.MainActivity;
-import com.example.winecellarsensor.view.RoomAdapter;
+import com.example.winecellarsensor.adapters.RoomAdapter;
 import com.example.winecellarsensor.view.RoomDetail;
 
 import java.util.List;
