@@ -1,6 +1,7 @@
 package com.example.winecellarsensor.view;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,27 +15,41 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.winecellarsensor.R;
+import com.example.winecellarsensor.fragments.ContactFragment;
 import com.example.winecellarsensor.fragments.DailyFragment;
+import com.example.winecellarsensor.fragments.HomeFragment;
+import com.example.winecellarsensor.fragments.MonthlyFragment;
+import com.example.winecellarsensor.fragments.NotificationsFragment;
 import com.example.winecellarsensor.fragments.StatisticsFragmentAdapter;
+import com.example.winecellarsensor.fragments.WeeklyFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 
-public class StatisticsActivity extends AppCompatActivity {
-
-  //  StatisticsFragmentAdapter statisticsFragmentPagerAdapter;
-  private static final int NUM_PAGES = 3;
-  private BottomNavigationView bottomNavigationMenuView;
+import me.relex.circleindicator.CircleIndicator;
 
 
-    //This is our tablayout
-  //private TabLayout tabLayout;
+public class StatisticsActivity extends AppCompatActivity  {
 
-    //This is our viewPager
+    private StatisticsFragmentAdapter statisticsFragmentAdapter;
+    private Fragment fragment;
+    private TabLayout tabLayout;
+
+    private TabItem tabItemDaily;
+    private TabItem tabItemWeekly;
+    private TabItem tabItemMonthly;
+    private Fragment selectedFragment = null;
+
     private ViewPager viewPager;
 
     @Override
@@ -44,35 +59,110 @@ public class StatisticsActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolStatistics);
         setSupportActionBar(toolbar);
-       // toolbar.setTitle("Statistic");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+      //  BottomNavigationView bottomNavigationView = findViewById(R.id.top_nav);
+      //  bottomNavigationView.setOnNavigationItemSelectedListener(navListenerStatistics);
 
-        //Initializing the tablayout
-       /* tabLayout = findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);
-
-        //Adding the tabs using addTab() method
-        tabLayout.addTab(tabLayout.newTab().setText("Your Tab Title"));
-        tabLayout.addTab(tabLayout.newTab().setText("Your Tab Title"));
-        tabLayout.addTab(tabLayout.newTab().setText("Your Tab Title"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);*/
-
-        //Initializing viewPager
         viewPager = (ViewPager) findViewById(R.id.pager);
-
-       /* viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(
-                tabLayout));*/
+        tabLayout = findViewById(R.id.tabLayout);
+        /*--------*/   tabLayout.setupWithViewPager(viewPager);
+        //  tabItemDaily =findViewById(R.id.tabItemDaily);
+       //  tabItemWeekly =findViewById(R.id.tabItemWeekly);
+      //  tabItemDaily =findViewById(R.id.tabItemMonthly);
 
         StatisticsFragmentAdapter adapter = new StatisticsFragmentAdapter(getSupportFragmentManager()) ;
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         viewPager.setAdapter(adapter);
 
-        //Adding onTabSelectedListener to swipe views
-        //tabLayout.setOnTabSelectedListener((TabLayout.BaseOnTabSelectedListener) this);
-        //setPagerAdapter();
+        CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
+        indicator.setViewPager(viewPager);
 
-       // bottomNavigationMenuView = (BottomNavigationView) findViewById(R.id.top_menu_nav);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case R.id.nav_daily:
+                        switchToFragmentDaily();
+                        tab.getText();
+                        break;
+                    case R.id.nav_weekly:
+                        switchToFragmentWeekly();
+                        break;
+                    case R.id.nav_monthly:
+                        switchToFragmentMonthly();
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+    }
+
+   private BottomNavigationView.OnNavigationItemSelectedListener navListenerStatistics =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    int count;
+                    switch (menuItem.getItemId()) {
+                        case R.id.nav_daily:
+                            switchToFragmentDaily();
+
+                            break;
+                        case R.id.nav_weekly:
+                            switchToFragmentWeekly();
+
+                            break;
+                        case R.id.nav_monthly:
+                            switchToFragmentMonthly();
+
+                            break;
+                    }
+                 //   getSupportFragmentManager().beginTransaction().replace(R.id.pager,selectedFragment ).commit();
+                    return loadFragment(fragment);
+                }
+            };
+
+    public void switchToFragmentDaily() {
+        fragment = new DailyFragment();
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.pager, fragment).commit();
+        Toast.makeText(getApplicationContext(), "Daily fragment", Toast.LENGTH_SHORT).show();
+    }
+
+    public void switchToFragmentWeekly() {
+        fragment = new WeeklyFragment();
+                FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.pager, fragment).commit();
+        Toast.makeText(getApplicationContext(), "Weekly fragment", Toast.LENGTH_SHORT).show();
+    }
+
+    public void switchToFragmentMonthly() {
+        fragment = new MonthlyFragment();
+                FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.pager, fragment).commit();
+        Toast.makeText(getApplicationContext(), "Monthly fragment", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean loadFragment(Fragment fragment) {
+        //switching fragment
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.pager, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -87,60 +177,5 @@ public class StatisticsActivity extends AppCompatActivity {
         }
     }
 
-
-    /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-     * sequence.
-     */
-    /*private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        public ScreenSlidePagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return new DailyFragment();
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_PAGES;
-        }
-    }*/
-
-   /* @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        viewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
-    }*/
-   /* private void setPagerAdapter(){
-        statisticsFragmentPagerAdapter = new StatisticsFragmentAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(statisticsFragmentPagerAdapter);
-    }*/
-
-    /*public static class PlaceholderFragment extends Fragment {
-
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-    }*/
 
 }

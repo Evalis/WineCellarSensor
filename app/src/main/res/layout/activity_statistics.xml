@@ -20,7 +20,6 @@
             android:background="@color/colorToolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -31,6 +30,29 @@
                 android:textSize="30sp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:tabTextColor="@color/colorWhite"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget">
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItemDaily"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:text="Daily"/>
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItemWeekly"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:text="Weekly"/>
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItemMonthly"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:text="Monthly"/>
+
+        </com.google.android.material.tabs.TabLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
@@ -40,19 +62,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_nav"
-        app:menu="@menu/top_menu_nav"/>
+        app:layout_constraintTop_toBottomOf="@+id/app_bar_layout" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/top_nav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="false"
-        android:background="@color/colorToolbar"
-        app:itemTextColor="@color/colorWhite"
+    <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/indicator"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/top_menu_nav" />
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

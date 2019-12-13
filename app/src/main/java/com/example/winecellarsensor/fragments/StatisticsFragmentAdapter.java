@@ -10,13 +10,18 @@ import com.example.winecellarsensor.R;
 public class StatisticsFragmentAdapter extends FragmentStatePagerAdapter {
 
     private static final int NUM_PAGES = 3;
+    private String[] tabTitles = new String[]{"Daily", "Weekly", "Monthly"};
+   // private Fragment fragment;
+    FragmentStatePagerAdapter fragmentStatePagerAdapter;
 
-    public StatisticsFragmentAdapter(FragmentManager fm) {
-        super(fm);
+
+    public StatisticsFragmentAdapter(FragmentManager supportFragmentManager) {
+        super(supportFragmentManager);
     }
 
+
     @Override
-    public Fragment getItem(int position) {
+   public Fragment getItem(int position) {
         switch (position) {
             case 0:
                 DailyFragment daily = new DailyFragment();
@@ -28,9 +33,16 @@ public class StatisticsFragmentAdapter extends FragmentStatePagerAdapter {
                 MonthlyFragment monthly = new MonthlyFragment();
                 return monthly;
             default:
-                return null;
+                throw new RuntimeException("Invalid tab position");
         }
+
     }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return tabTitles[position];
+    }
+
 
     @Override
     public int getCount() {
