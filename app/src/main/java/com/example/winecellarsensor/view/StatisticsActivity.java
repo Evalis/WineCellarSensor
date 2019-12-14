@@ -46,15 +46,11 @@ public class StatisticsActivity extends AppCompatActivity  {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-      //  BottomNavigationView bottomNavigationView = findViewById(R.id.top_nav);
-      //  bottomNavigationView.setOnNavigationItemSelectedListener(navListenerStatistics);
 
-        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager = findViewById(R.id.pager);
         tabLayout = findViewById(R.id.tabLayout);
-        /*--------*/   tabLayout.setupWithViewPager(viewPager);
-        //  tabItemDaily =findViewById(R.id.tabItemDaily);
-       //  tabItemWeekly =findViewById(R.id.tabItemWeekly);
-      //  tabItemDaily =findViewById(R.id.tabItemMonthly);
+       tabLayout.setupWithViewPager(viewPager);
+
 
         StatisticsFragmentAdapter adapter = new StatisticsFragmentAdapter(getSupportFragmentManager()) ;
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -108,7 +104,7 @@ public class StatisticsActivity extends AppCompatActivity  {
 
                             break;
                     }
-                 //   getSupportFragmentManager().beginTransaction().replace(R.id.pager,selectedFragment ).commit();
+
                     return loadFragment(fragment);
                 }
             };

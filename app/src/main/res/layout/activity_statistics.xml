@@ -25,13 +25,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="cursive"
-                android:text="Wine Cellar Sensor"
+                android:text="Statistics"
                 android:textColor="@color/colorWhite"
                 android:textSize="30sp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
+            android:background="@color/colorDark"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             app:tabTextColor="@color/colorWhite"

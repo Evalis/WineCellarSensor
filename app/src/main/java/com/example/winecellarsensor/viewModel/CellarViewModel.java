@@ -1,4 +1,4 @@
-package com.example.winecellarsensor.ViewModel;
+package com.example.winecellarsensor.viewModel;
 
 import android.app.Application;
 

@@ -8,13 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-
 import com.example.winecellarsensor.R;
-import com.example.winecellarsensor.ViewModel.CellarViewModel;
+import com.example.winecellarsensor.viewModel.CellarViewModel;
 import com.example.winecellarsensor.model.Room;
-
 import java.util.List;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;

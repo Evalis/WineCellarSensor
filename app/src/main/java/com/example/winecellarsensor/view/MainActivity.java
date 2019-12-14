@@ -11,7 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import com.example.winecellarsensor.R;
-import com.example.winecellarsensor.ViewModel.CellarViewModel;
+import com.example.winecellarsensor.viewModel.CellarViewModel;
 import com.example.winecellarsensor.fragments.HomeFragment;
 import com.example.winecellarsensor.fragments.NotificationsFragment;
 import com.example.winecellarsensor.fragments.ContactFragment;
@@ -49,14 +49,14 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 switch (menuItem.getItemId()) {
-                    case 0:
-                        new HomeFragment(MainActivity.this,cellarViewModel);
+                    case R.id.nav_home:
+                        selectedFragment = new HomeFragment(MainActivity.this,cellarViewModel);
                         break;
-                    case 1:
-                        new ContactFragment();
+                    case R.id.nav_contact:
+                        selectedFragment =  new ContactFragment();
                         break;
-                    case 2:
-                        new NotificationsFragment();
+                    case R.id.nav_notifications:
+                        selectedFragment = new NotificationsFragment();
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
