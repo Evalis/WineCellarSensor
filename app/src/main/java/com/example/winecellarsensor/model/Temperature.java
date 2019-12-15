@@ -4,21 +4,22 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Temperature implements Serializable {
 
     @SerializedName("date")
     @Expose
-    private String date;
+    private Date date;
     @SerializedName("value")
     @Expose
     private Double value;
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

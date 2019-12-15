@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -57,13 +59,13 @@ public class HomeFragment extends Fragment implements RoomAdapter.OnListItemClic
 
 
         dialog = new Dialog(c);
-        dialog.show();
+
 
         cellarViewModel.getRooms().observe(this.getActivity(), new Observer<List<Room>>() {
             @Override
             public void onChanged(List<Room> rooms) {
                 roomAdapter.setRooms(rooms);
-             outOfBoundValues(rooms);
+                outOfBoundValues(rooms);
             }
         });
 
@@ -95,7 +97,6 @@ public class HomeFragment extends Fragment implements RoomAdapter.OnListItemClic
 
             if(currentCo2 <= co2Min || currentCo2>= co2Max)
             {
-                Log.i("Dialog", "dialog not working ");
                 showDialog();
             }
 
@@ -106,9 +107,9 @@ public class HomeFragment extends Fragment implements RoomAdapter.OnListItemClic
 
             if(currentHum <= humMin || currentHum >= humMax)
             {
-
+                showDialog();
             }
-            showDialog();
+
         }
     }
 
@@ -122,5 +123,8 @@ public class HomeFragment extends Fragment implements RoomAdapter.OnListItemClic
                 dialog.dismiss();
             }
         });
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
     }
 }
