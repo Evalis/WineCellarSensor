@@ -16,4 +16,8 @@
     <string name="app_call">Call</string>
     <string name="app_email">Email</string>
     <string name="app_message">Message</string>
+    <string name="negative_popup_title">Value out of bounds</string>
+    <string name="OK">OK</string>
+    <string name="negativeTitle">Warning!</string>
+
 </resources>

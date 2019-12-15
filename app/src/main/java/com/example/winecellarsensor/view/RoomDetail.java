@@ -2,7 +2,7 @@ package com.example.winecellarsensor.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,6 +10,7 @@ import com.example.winecellarsensor.R;
 import com.example.winecellarsensor.model.Room;
 import com.example.winecellarsensor.viewModel.CellarViewModel;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
 public class RoomDetail extends AppCompatActivity {
@@ -24,6 +25,12 @@ public class RoomDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_detail);
+
+        Toolbar toolbar = findViewById(R.id.tool);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
 
         if (savedInstanceState == null) {
@@ -41,7 +48,6 @@ public class RoomDetail extends AppCompatActivity {
 
        roomName = findViewById(R.id.roomName);
        roomName.setText(room.getRoomName());
-        Log.i("", room.getRoomName());
 
         temperature = findViewById(R.id.temperature);
         temperature.setText(room.getTemperature().getValue().toString());
@@ -81,5 +87,16 @@ public class RoomDetail extends AppCompatActivity {
         Intent i = new Intent(RoomDetail.this, SettingsActivity.class);
         i.putExtra("RoomName", room.getRoomName());
         startActivity(i);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

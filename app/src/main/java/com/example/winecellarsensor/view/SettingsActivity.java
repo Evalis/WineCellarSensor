@@ -43,7 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
         minValueCo2.setText(co2Min);
 
         maxValueCo2 = findViewById(R.id.max_value_co2);
-        String co2Max = prefs.getString("Co2MinRange"+ roomName, null);
+        String co2Max = prefs.getString("Co2MaxRange"+ roomName, null);
         maxValueCo2.setText(co2Max);
 
         minValueTemp = findViewById(R.id.min_value_temp);

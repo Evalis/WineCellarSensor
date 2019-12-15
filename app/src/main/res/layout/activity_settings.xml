@@ -74,7 +74,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="wrap_content"
-                android:text="Set temperature range" />
+                android:text="Set Temperature range" />
 
             <EditText
                 android:id="@+id/min_value_temp"
@@ -110,7 +110,7 @@
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="wrap_content"
-            android:text="Set humidity range" />
+            android:text="Set Humidity range" />
 
         <EditText
             android:id="@+id/min_value_hum"
