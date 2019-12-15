@@ -49,7 +49,7 @@ public class StatisticsActivity extends AppCompatActivity  {
 
         viewPager = findViewById(R.id.pager);
         tabLayout = findViewById(R.id.tabLayout);
-       tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
 
 
         StatisticsFragmentAdapter adapter = new StatisticsFragmentAdapter(getSupportFragmentManager()) ;
@@ -154,5 +154,14 @@ public class StatisticsActivity extends AppCompatActivity  {
         }
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

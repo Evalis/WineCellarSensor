@@ -2,6 +2,7 @@ package com.example.winecellarsensor.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -38,8 +39,9 @@ public class RoomDetail extends AppCompatActivity {
 
         cellarViewModel = ViewModelProviders.of(this).get(CellarViewModel.class);
 
-        roomName = findViewById(R.id.roomName);
-        roomName.setText(room.getRoomName());
+       roomName = findViewById(R.id.roomName);
+       roomName.setText(room.getRoomName());
+        Log.i("", room.getRoomName());
 
         temperature = findViewById(R.id.temperature);
         temperature.setText(room.getTemperature().getValue().toString());
