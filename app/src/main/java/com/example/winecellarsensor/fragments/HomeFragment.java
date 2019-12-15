@@ -116,5 +116,11 @@ public class HomeFragment extends Fragment implements RoomAdapter.OnListItemClic
     {
         dialog.setContentView(R.layout.dialog_warning);
         closeDialog = dialog.findViewById(R.id.closeDialog);
+        closeDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
     }
 }
