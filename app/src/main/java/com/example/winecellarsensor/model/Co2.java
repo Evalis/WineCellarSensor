@@ -15,6 +15,8 @@ public class Co2 implements Serializable {
     @Expose
     private Double value;
 
+    public static String TYPE = "Co2";
+
     public Date getDate() {
         return date;
     }

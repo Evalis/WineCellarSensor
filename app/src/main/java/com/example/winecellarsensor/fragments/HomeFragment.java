@@ -7,13 +7,17 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.winecellarsensor.R;
+import com.example.winecellarsensor.model.Co2;
+import com.example.winecellarsensor.model.Humidity;
+import com.example.winecellarsensor.model.Temperature;
+import com.example.winecellarsensor.model.Warning;
 import com.example.winecellarsensor.viewModel.CellarViewModel;
 import com.example.winecellarsensor.model.Room;
 import com.example.winecellarsensor.view.MainActivity;
@@ -36,6 +40,7 @@ public class HomeFragment extends Fragment implements RoomAdapter.OnListItemClic
     Context c;
     Dialog dialog;
     ImageView closeDialog;
+    TextView roomName, dateTime, sensor, max, min, actual;
 
     private CellarViewModel cellarViewModel;
 
@@ -97,34 +102,57 @@ public class HomeFragment extends Fragment implements RoomAdapter.OnListItemClic
 
             if(currentCo2 <= co2Min || currentCo2>= co2Max)
             {
-                showDialog();
+                Warning warning = new Warning(rooms.get(i).getRoomName(), Co2.TYPE, rooms.get(i).getCo2().getDate(),  co2Min, co2Max, currentCo2);
+                showDialog(warning);
             }
 
             if(currentTemp <= tempMin || currentTemp>= tempMax)
             {
-                showDialog();
+                Warning warning = new Warning(rooms.get(i).getRoomName(), Temperature.TYPE, rooms.get(i).getTemperature().getDate(),  tempMin, tempMax, currentTemp);
+                showDialog(warning);
             }
 
             if(currentHum <= humMin || currentHum >= humMax)
             {
-                showDialog();
+                Warning warning = new Warning(rooms.get(i).getRoomName(), Humidity.TYPE, rooms.get(i).getHumidity().getDate(),  humMin, humMax, currentHum);
+                showDialog(warning);
             }
 
         }
     }
 
-    private void showDialog()
+    private void showDialog(Warning warning)
     {
         dialog.setContentView(R.layout.dialog_warning);
         closeDialog = dialog.findViewById(R.id.closeDialog);
+
+        roomName = dialog.findViewById(R.id.dialog_roomName);
+        roomName.setText(warning.getRoomName());
+
+        sensor = dialog.findViewById(R.id.dialog_sensorName);
+        sensor.setText(warning.getSensorName());
+
+        dateTime = dialog.findViewById(R.id.dialog_dateTime);
+        dateTime.setText(warning.getDate().toString());
+
+        max = dialog.findViewById(R.id.dialog_max);
+        max.setText(warning.getMaxValue()+"");
+
+        min = dialog.findViewById(R.id.dialog_min);
+        min.setText(warning.getMinValue()+"");
+
+        actual = dialog.findViewById(R.id.dialog_actual);
+        actual.setText(warning.getActualValue()+"");
+
+
         closeDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
             }
         });
-
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         dialog.show();
     }
 }
