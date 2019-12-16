@@ -53,6 +53,10 @@ public class WarningAdapter extends RecyclerView.Adapter<WarningAdapter.ViewHold
         return warnings.size();
     }
 
+    public Warning getWarningAt(int i){
+        return warnings.get(i);
+    }
+
     public void setWarnings(List<Warning> warnings)
     {
         this.warnings = warnings;

@@ -17,10 +17,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,6 +44,7 @@ public class NotificationsFragment extends Fragment {
         warningsList.setLayoutManager(new LinearLayoutManager(c));
 
         warningsAdapter = new WarningAdapter();
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(warningsList);
         warningsList.setAdapter(warningsAdapter);
 
         cellarViewModel.getWarnings().observe(this.getActivity(), new Observer<List<Warning>>() {
@@ -53,4 +56,18 @@ public class NotificationsFragment extends Fragment {
 
         return rootView;
     }
+
+    ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            cellarViewModel.delete(warningsAdapter.getWarningAt(viewHolder.getAdapterPosition()));
+            Toast.makeText(getContext(),"Warning deleted", Toast.LENGTH_SHORT).show();
+            warningsAdapter.notifyDataSetChanged();
+        }
+    };
 }
