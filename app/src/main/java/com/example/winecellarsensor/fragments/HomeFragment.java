@@ -84,12 +84,12 @@ public class HomeFragment extends Fragment implements RoomAdapter.OnListItemClic
         for (int i = 0; i < rooms.size(); i++) {
 
             SharedPreferences prefs = c.getSharedPreferences("MyPreferences", MODE_PRIVATE);
-            double co2Min = Double.parseDouble(prefs.getString("Co2MinRange" + rooms.get(i).getRoomName(), "18"));
-            double co2Max = Double.parseDouble(prefs.getString("Co2MaxRange" + rooms.get(i).getRoomName(), "18"));
-            double tempMin = Double.parseDouble(prefs.getString("TempMinRange" + rooms.get(i).getRoomName(), "18"));
-            double tempMax = Double.parseDouble(prefs.getString("TempMaxRange" + rooms.get(i).getRoomName(), "18"));
-            double humMin = Double.parseDouble(prefs.getString("HumMinRange" + rooms.get(i).getRoomName(), "18"));
-            double humMax = Double.parseDouble(prefs.getString("HumMaxRange" + rooms.get(i).getRoomName(), "18"));
+            double co2Min = Double.parseDouble(prefs.getString("Co2MinRange" + rooms.get(i).getRoomName(), "19"));
+            double co2Max = Double.parseDouble(prefs.getString("Co2MaxRange" + rooms.get(i).getRoomName(), "19"));
+            double tempMin = Double.parseDouble(prefs.getString("TempMinRange" + rooms.get(i).getRoomName(), "19"));
+            double tempMax = Double.parseDouble(prefs.getString("TempMaxRange" + rooms.get(i).getRoomName(), "19"));
+            double humMin = Double.parseDouble(prefs.getString("HumMinRange" + rooms.get(i).getRoomName(), "19"));
+            double humMax = Double.parseDouble(prefs.getString("HumMaxRange" + rooms.get(i).getRoomName(), "19"));
 
             double currentCo2 = rooms.get(i).getCo2().getValue();
             double currentTemp = rooms.get(i).getTemperature().getValue();
