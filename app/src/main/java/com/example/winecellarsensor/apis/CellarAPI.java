@@ -2,6 +2,8 @@ package com.example.winecellarsensor.apis;
 
 
 
+import com.example.winecellarsensor.model.Measurements;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -9,6 +11,10 @@ import retrofit2.http.Path;
 public interface CellarAPI {
     @GET("/api/cellar/GetCurrentRoomValue/{cellarID}")
     Call<CellarResponse> getAllRooms(@Path("cellarID") String cellarID);
+
+    @GET("/api/cellar/GetAllWeeklyValue/{cellarID}/{roomName}")
+    Call<MeasurementsResponse> getAllWeeklyMeasurements(@Path("roomName") String roomName, @Path("cellarID") String cellarID);
+
 }
 
 

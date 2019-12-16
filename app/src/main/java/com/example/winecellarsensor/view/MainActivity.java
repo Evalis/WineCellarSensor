@@ -32,10 +32,9 @@ public class MainActivity extends AppCompatActivity {
         String id = prefs.getString("cellarID", null);
         cellarViewModel.updateCellar(id);
 
+
         Toolbar toolbar = findViewById(R.id.tool);
         setSupportActionBar(toolbar);
-
-
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);

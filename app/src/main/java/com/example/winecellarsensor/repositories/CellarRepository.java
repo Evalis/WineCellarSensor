@@ -3,23 +3,21 @@ package com.example.winecellarsensor.repositories;
 import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.LinearLayout;
 
 import com.example.winecellarsensor.apis.CellarAPI;
 import com.example.winecellarsensor.apis.CellarResponse;
 import com.example.winecellarsensor.apis.CellarServiceGenerator;
+import com.example.winecellarsensor.apis.MeasurementsResponse;
 import com.example.winecellarsensor.database.WarningDao;
 import com.example.winecellarsensor.database.WarningDatabase;
+import com.example.winecellarsensor.model.Measurements;
 import com.example.winecellarsensor.model.Room;
 import com.example.winecellarsensor.model.Warning;
 
 import java.util.List;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,6 +28,7 @@ public class CellarRepository {
     private LiveData<List<Warning>> warnings;
     private static CellarRepository instance;
     private MutableLiveData<List<Room>> rooms;
+    private MutableLiveData<Measurements> weeklyMeasurements;
 
     private CellarRepository(Application application)
     {
@@ -37,6 +36,7 @@ public class CellarRepository {
         WarningDatabase database = WarningDatabase.getInstance(application);
         warningDao = database.warningDao();
         warnings = warningDao.getAllWarnings();
+        weeklyMeasurements = new MutableLiveData<Measurements>();
     }
 
 
@@ -150,4 +150,36 @@ public class CellarRepository {
             }
         });
     }
+
+    public void getWeeklyMeasurements(String roomName, String cellarID){
+        CellarAPI cellarAPI = CellarServiceGenerator.getCellarAPI();
+        Call<MeasurementsResponse> call = cellarAPI.getAllWeeklyMeasurements(roomName, cellarID);
+        call.enqueue(new Callback<MeasurementsResponse>() {
+            @Override
+            public void onResponse(Call<MeasurementsResponse> call, Response<MeasurementsResponse> response) {
+                Log.i("Retrofit", "Response received " + response.code() + ", "+ response.message() + ", "+ response.body() + ", "+ response.errorBody() + ", "+ response.headers() + ", "+ response.raw());
+                if (response.code() == 200) {
+                    Log.i("Retrofit", "Good response");
+                    weeklyMeasurements.setValue(response.body().getAllWeeklyMeasurements());
+                    //Log.i("Luci", response.body().getAllWeeklyMeasurements()+"");
+                    /*weeklyMeasurements.setCo2List(response.body().getAllWeeklyMeasurements().getCo2List());
+                    weeklyMeasurements.setHumidityList(response.body().getAllWeeklyMeasurements().getHumidityList());
+                    weeklyMeasurements.setRoomName(response.body().getAllWeeklyMeasurements().getRoomName());
+                    weeklyMeasurements.setTemperatureList(response.body().getAllWeeklyMeasurements().getTemperatureList());
+                    Log.d("Luci", weeklyMeasurements.getRoomName()+", "+ weeklyMeasurements.getTemperatureList().get(0).getValue()+", " + weeklyMeasurements.getTemperatureList().get(0).getDate() );*/
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MeasurementsResponse> call, Throwable t) {
+                Log.i("RetrofitError", "" + t.getMessage());
+                Log.i("Retrofit", "Something went wrong :(" + call.toString());
+            }
+        });
+    }
+
+    public LiveData<Measurements> getWeeklyMeasurementsLiveData(){
+        return weeklyMeasurements;
+    }
+
 }

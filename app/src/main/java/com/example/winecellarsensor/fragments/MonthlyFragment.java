@@ -32,6 +32,7 @@ public class MonthlyFragment extends Fragment {
     private LineChart lineChartHumidity;
     private Date date = new Date(1576423531877l);
     private Date date2 = new Date(1576423617813l);
+    private String[]dates = new String[]{date.toString(),date2.toString()};
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -143,6 +144,7 @@ public class MonthlyFragment extends Fragment {
         XAxis xAxis = lineChartCo2.getXAxis();
         xAxis.enableGridDashedLine(10f, 10f, 0f);
         xAxis.setAxisMaximum(1576423797317f);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(dates));
         xAxis.setTextColor(Color.WHITE);
         xAxis.setAxisMinimum(1576423396468f);
         xAxis.setDrawLimitLinesBehindData(true);

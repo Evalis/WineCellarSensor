@@ -16,6 +16,11 @@ public class Humidity implements Serializable {
     private Double value;
     public static String TYPE = "Humidity";
 
+    public Humidity(Date date, Double value) {
+        this.date = date;
+        this.value = value;
+    }
+
     public Date getDate() {
         return date;
     }

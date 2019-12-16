@@ -2,6 +2,7 @@ package com.example.winecellarsensor.viewModel;
 
 import android.app.Application;
 
+import com.example.winecellarsensor.model.Measurements;
 import com.example.winecellarsensor.model.Room;
 import com.example.winecellarsensor.model.Warning;
 import com.example.winecellarsensor.repositories.CellarRepository;
@@ -57,4 +58,13 @@ public class CellarViewModel extends AndroidViewModel {
 
         repository.updateCellar(cellarID);
     }
+
+    public LiveData<Measurements> getWeeklyMeasurementsLiveData(){
+        return repository.getWeeklyMeasurementsLiveData();
+    }
+
+    public void getAllWeeklyMeasurements(String roomName, String cellarId){
+                     repository.getWeeklyMeasurements(roomName, cellarId);
+    }
+
 }

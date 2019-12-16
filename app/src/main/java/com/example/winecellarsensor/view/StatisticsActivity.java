@@ -1,5 +1,6 @@
 package com.example.winecellarsensor.view;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -10,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.winecellarsensor.R;
@@ -17,10 +20,14 @@ import com.example.winecellarsensor.fragments.DailyFragment;
 import com.example.winecellarsensor.fragments.MonthlyFragment;
 import com.example.winecellarsensor.adapters.StatisticsFragmentAdapter;
 import com.example.winecellarsensor.fragments.WeeklyFragment;
+import com.example.winecellarsensor.model.Measurements;
+import com.example.winecellarsensor.model.Room;
+import com.example.winecellarsensor.viewModel.CellarViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.List;
 
 
 public class StatisticsActivity extends AppCompatActivity  {
@@ -36,6 +43,7 @@ public class StatisticsActivity extends AppCompatActivity  {
 
     private ViewPager viewPager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +55,10 @@ public class StatisticsActivity extends AppCompatActivity  {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
+
         viewPager = findViewById(R.id.pager);
         tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
-
 
         StatisticsFragmentAdapter adapter = new StatisticsFragmentAdapter(getSupportFragmentManager()) ;
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

@@ -51,13 +51,13 @@ public class DailyFragment extends Fragment {
 
         ArrayList<Entry> entries = new ArrayList<>();
 
-        entries.add(new Entry(0, 300));
+        entries.add(new Entry(0, 250));
         entries.add(new Entry(1, 250));
-        entries.add(new Entry(2, 400));
-        entries.add(new Entry(3, 640));
-        entries.add(new Entry(4, 700));
-        entries.add(new Entry(5, 900));
-        entries.add(new Entry(6, 800));
+        entries.add(new Entry(2, 250));
+        entries.add(new Entry(3, 250));
+        entries.add(new Entry(4, 250));
+        entries.add(new Entry(5, 250));
+        entries.add(new Entry(6, 250));
         entries.add(new Entry(7, 1500));
         entries.add(new Entry(8, 1250));
         entries.add(new Entry(9, 1000));

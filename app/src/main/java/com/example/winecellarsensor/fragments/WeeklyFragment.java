@@ -1,16 +1,26 @@
 package com.example.winecellarsensor.fragments;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.winecellarsensor.R;
+import com.example.winecellarsensor.model.Co2;
+import com.example.winecellarsensor.model.Humidity;
+import com.example.winecellarsensor.model.Measurements;
+import com.example.winecellarsensor.model.Temperature;
+import com.example.winecellarsensor.viewModel.CellarViewModel;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
@@ -19,51 +29,86 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class WeeklyFragment extends Fragment {
 
     private LineChart lineChartCo2;
     private LineChart lineChartTemperature;
     private LineChart lineChartHumidity;
+    private CellarViewModel cellarViewModel;
     private Date date = new Date(1576423531877l);
     private Date date2 = new Date(1576423617813l);
-    private String[]dates = new String[]{date.toString(),date2.toString()};
+   // private String[]dates = new String[]{date.toString(),date2.toString()};
+    //private int number=0;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_weekly, container, false);
-
         lineChartCo2 = rootView.findViewById(R.id.lineChartCo2Weekly);
-        createLineChartCo2(lineChartCo2);
         lineChartTemperature = rootView.findViewById(R.id.lineChartTemperatureWeekly);
-        createLineChartTemperature(lineChartTemperature);
         lineChartHumidity = rootView.findViewById(R.id.lineChartHumidityWeekly);
-        createLineChartHumidity(lineChartHumidity);
 
+        cellarViewModel = ViewModelProviders.of(this).get(CellarViewModel.class);
+        SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        String id = prefs.getString("cellarID", null);
+        cellarViewModel.getAllWeeklyMeasurements("basement",id);
+        cellarViewModel.getWeeklyMeasurementsLiveData().observe(this.getActivity(), new Observer<Measurements>() {
+            @Override
+            public void onChanged(Measurements measurements) {
+                ArrayList<Entry> co2Entries = new ArrayList<>();
+                ArrayList<Entry> temperatureEntries = new ArrayList<>();
+                ArrayList<Entry> humidityEntries = new ArrayList<>();
+
+                for (Co2 co2:measurements.getCo2List()) {
+                    co2Entries.add(new Entry(co2.getDate().getTime(),co2.getValue().floatValue()));
+                    //Log.i("Lucika", co2Entries.get(co2Entries.size()-1).getX()+"");
+                }
+
+                for (Temperature temperature:measurements.getTemperatureList()) {
+                    temperatureEntries.add(new Entry(temperature.getDate().getTime(),temperature.getValue().floatValue()));
+
+                }
+
+                Log.i("Lucbebi", temperatureEntries.size()+", "+measurements.getTemperatureList().size());
+                for (Humidity humidity:measurements.getHumidityList()) {
+                    humidityEntries.add(new Entry(humidity.getDate().getTime(),humidity.getValue().floatValue()));
+                }
+                Collections.sort(co2Entries, new Comparator<Entry>() {
+                    @Override
+                    public int compare(Entry o1, Entry o2) {
+                        return Float.compare(o1.getX(),o2.getX());
+                    }
+                });
+                Collections.sort(temperatureEntries, new Comparator<Entry>() {
+                    @Override
+                    public int compare(Entry o1, Entry o2) {
+                        return Float.compare(o1.getX(),o2.getX());
+                    }
+                });
+                Collections.sort(humidityEntries, new Comparator<Entry>() {
+                    @Override
+                    public int compare(Entry o1, Entry o2) {
+                        return Float.compare(o1.getX(),o2.getX());
+                    }
+                });
+                Log.i("Lucika", temperatureEntries.size()+", "+(temperatureEntries.size()-1));
+                createLineChartCo2(lineChartCo2,co2Entries,co2Entries.get(co2Entries.size()-1).getX(),co2Entries.get(0).getX());
+                createLineChartTemperature(lineChartTemperature,temperatureEntries,temperatureEntries.get(temperatureEntries.size()-1).getX(),temperatureEntries.get(0).getX());
+                createLineChartHumidity(lineChartHumidity,humidityEntries,humidityEntries.get(humidityEntries.size()-1).getX(),humidityEntries.get(0).getX());
+            }
+        });
         return rootView;
-    }
-
-    private ArrayList<Entry> getValuesCo2(){
-
-        ArrayList<Entry> entries = new ArrayList<>();
-
-        entries.add(new Entry(date.getTime(), 1000));
-        entries.add(new Entry(date2.getTime(), 1500));
-       /*  entries.add(new Entry(2, 9));
-        entries.add(new Entry(3, 4));
-        entries.add(new Entry(4, 20));
-        entries.add(new Entry(5, 4));
-        entries.add(new Entry(6, 20));
-        entries.add(new Entry(7, 1500));*/
-
-        return entries;
     }
 
     private ArrayList<Entry> getValuesTemperature(){
@@ -100,7 +145,7 @@ public class WeeklyFragment extends Fragment {
         return entries;
     }
 
-    private void createLineChartCo2(LineChart lineChartCo2) {
+    private void createLineChartCo2(LineChart lineChartCo2, ArrayList<Entry> valuesCo2, float max, float min) {
 
         Description descriptionCo2 = new Description();
         descriptionCo2.setText("Co2");
@@ -108,7 +153,7 @@ public class WeeklyFragment extends Fragment {
         descriptionCo2.setTextSize(20);
         descriptionCo2.setTextColor(Color.WHITE);
 
-        LimitLine llXAxis = new LimitLine(10f, "Index 10");
+        LimitLine llXAxis = new LimitLine(50f, "Index 10");
         llXAxis.setLineWidth(4f);
         llXAxis.enableDashedLine(10f, 10f, 0f);
         llXAxis.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
@@ -131,30 +176,41 @@ public class WeeklyFragment extends Fragment {
         ll2.setTextSize(10f);
         ll2.setTextColor(Color.WHITE);
 
-
-
         XAxis xAxis = lineChartCo2.getXAxis();
         xAxis.enableGridDashedLine(10f, 10f, 0f);
-        xAxis.setAxisMaximum(1576423797317f);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(dates));
+        xAxis.setAxisMaximum(max);
+       // xAxis.setLabelCount(valuesCo2.size());
+      /*  List<String> dates = new ArrayList<>();
+        for (Entry entry: valuesCo2) {
+            Calendar calendar=Calendar.getInstance();
+            calendar.setTimeInMillis((long)entry.getX());
+            //dates.add(calendar.getDisplayName(Calendar.DATE,Calendar.SHORT,new Locale("EN")));
+            Date date = new Date((long)entry.getX());
+            Format format = new SimpleDateFormat("MM dd");
+            dates.add(format.format(date));
+            Log.i("Lucibaba",  format.format(date)+"");
+        }*/
+      //  xAxis.setValueFormatter(new IndexAxisValueFormatter(dates));
         xAxis.setTextColor(Color.WHITE);
-        xAxis.setAxisMinimum(1576423396468f);
+        xAxis.setAxisMinimum(min);
         xAxis.setDrawLimitLinesBehindData(true);
+       // xAxis.setGranularityEnabled(true);
+        //xAxis.setGranularity(2);
 
         YAxis leftAxis = lineChartCo2.getAxisLeft();
         leftAxis.removeAllLimitLines();
         leftAxis.setTextColor(Color.WHITE);
         leftAxis.addLimitLine(ll1);
         leftAxis.addLimitLine(ll2);
-        leftAxis.setAxisMaximum(5000f);
-        leftAxis.setAxisMinimum(200f);
+        leftAxis.setAxisMaximum(50);
+        leftAxis.setAxisMinimum(0);
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
         leftAxis.setDrawZeroLine(true);
         leftAxis.setDrawLimitLinesBehindData(true);
 
         lineChartCo2.getAxisRight().setEnabled(false);
 
-        LineDataSet lineDataSetCo2 = new LineDataSet(getValuesCo2(), "CO2");
+        LineDataSet lineDataSetCo2 = new LineDataSet(valuesCo2, "CO2");
         lineDataSetCo2.setColor(Color.WHITE);
         lineDataSetCo2.enableDashedLine(10f, 5f, 0f);
         lineDataSetCo2.enableDashedHighlightLine(10f, 5f, 0f);
@@ -197,7 +253,7 @@ public class WeeklyFragment extends Fragment {
         legendCo2.setFormToTextSpace(10f);
     }
 
-    private void createLineChartTemperature(LineChart lineChartTemperature){
+    private void createLineChartTemperature(LineChart lineChartTemperature, ArrayList<Entry> valuesTemperature, float max, float min){
 
         Description descriptionTemperature = new Description();
         descriptionTemperature.setText("Temperature");
@@ -229,9 +285,9 @@ public class WeeklyFragment extends Fragment {
 
         XAxis xAxis = lineChartTemperature.getXAxis();
         xAxis.enableGridDashedLine(10f, 10f, 0f);
-        xAxis.setAxisMaximum(7f);
+        xAxis.setAxisMaximum(max);
         xAxis.setTextColor(Color.WHITE);
-        xAxis.setAxisMinimum(0f);
+        xAxis.setAxisMinimum(min);
         xAxis.setDrawLimitLinesBehindData(true);
 
         YAxis leftAxis = lineChartTemperature.getAxisLeft();
@@ -239,15 +295,15 @@ public class WeeklyFragment extends Fragment {
         leftAxis.setTextColor(Color.WHITE);
         leftAxis.addLimitLine(ll1);
         leftAxis.addLimitLine(ll2);
-        leftAxis.setAxisMaximum(25f);
-        leftAxis.setAxisMinimum(-20f);
+        leftAxis.setAxisMaximum(30f);
+        leftAxis.setAxisMinimum(0f);
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
         leftAxis.setDrawZeroLine(true);
         leftAxis.setDrawLimitLinesBehindData(true);
 
         lineChartTemperature.getAxisRight().setEnabled(false);
 
-        LineDataSet lineDataSetTemperature = new LineDataSet(getValuesTemperature(),"Temperature");
+        LineDataSet lineDataSetTemperature = new LineDataSet(valuesTemperature,"Temperature");
         lineDataSetTemperature.setColor(Color.WHITE);
         lineDataSetTemperature.enableDashedLine(10f, 5f, 0f);
         lineDataSetTemperature.enableDashedHighlightLine(10f, 5f, 0f);
@@ -290,7 +346,7 @@ public class WeeklyFragment extends Fragment {
         legendTemperature.setFormToTextSpace(10f);
     }
 
-    private void createLineChartHumidity(LineChart lineChartHumidity){
+    private void createLineChartHumidity(LineChart lineChartHumidity,ArrayList<Entry> valuesHumidity, float max, float min){
         Description descriptionHumidity = new Description();
         descriptionHumidity.setText("Humidity");
         descriptionHumidity.setTextSize(20);
@@ -321,9 +377,9 @@ public class WeeklyFragment extends Fragment {
 
         XAxis xAxis = lineChartHumidity.getXAxis();
         xAxis.enableGridDashedLine(10f, 10f, 0f);
-        xAxis.setAxisMaximum(7f);
+        xAxis.setAxisMaximum(max);
         xAxis.setTextColor(Color.WHITE);
-        xAxis.setAxisMinimum(0f);
+        xAxis.setAxisMinimum(min);
         xAxis.setDrawLimitLinesBehindData(true);
 
         YAxis leftAxis = lineChartHumidity.getAxisLeft();
@@ -331,15 +387,15 @@ public class WeeklyFragment extends Fragment {
         leftAxis.setTextColor(Color.WHITE);
         leftAxis.addLimitLine(ll1);
         leftAxis.addLimitLine(ll2);
-        leftAxis.setAxisMaximum(100f);
-        leftAxis.setAxisMinimum(0f);
+        leftAxis.setAxisMaximum(30f);
+        leftAxis.setAxisMinimum(10f);
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
         leftAxis.setDrawZeroLine(true);
         leftAxis.setDrawLimitLinesBehindData(true);
 
         lineChartHumidity.getAxisRight().setEnabled(false);
 
-        LineDataSet lineDataSetHumidity = new LineDataSet(getValuesHumidity(),"Humidty");
+        LineDataSet lineDataSetHumidity = new LineDataSet(valuesHumidity,"Humidty");
         lineDataSetHumidity.setColor(Color.WHITE);
         lineDataSetHumidity.enableDashedLine(10f, 5f, 0f);
         lineDataSetHumidity.enableDashedHighlightLine(10f, 5f, 0f);
