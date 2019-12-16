@@ -14,6 +14,7 @@ public class Humidity implements Serializable {
     @SerializedName("value")
     @Expose
     private Double value;
+    public static String TYPE = "Humidity";
 
     public Date getDate() {
         return date;

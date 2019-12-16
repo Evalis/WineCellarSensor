@@ -15,6 +15,8 @@ public class Temperature implements Serializable {
     @Expose
     private Double value;
 
+    public static String TYPE = "Temperature";
+
     public Date getDate() {
         return date;
     }
