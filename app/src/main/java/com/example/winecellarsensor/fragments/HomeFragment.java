@@ -11,14 +11,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.winecellarsensor.R;
+import com.example.winecellarsensor.model.Warning;
+import com.example.winecellarsensor.repositories.CellarRepository;
 import com.example.winecellarsensor.viewModel.CellarViewModel;
 import com.example.winecellarsensor.model.Room;
 import com.example.winecellarsensor.view.MainActivity;
 import com.example.winecellarsensor.adapters.RoomAdapter;
 import com.example.winecellarsensor.view.RoomDetail;
+
+import java.util.Date;
 import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,6 +41,7 @@ public class HomeFragment extends Fragment implements RoomAdapter.OnListItemClic
     Context c;
     Dialog dialog;
     ImageView closeDialog;
+    Button dialogOk;
 
     private CellarViewModel cellarViewModel;
 
@@ -95,18 +101,26 @@ public class HomeFragment extends Fragment implements RoomAdapter.OnListItemClic
             double currentTemp = rooms.get(i).getTemperature().getValue();
             double currentHum = rooms.get(i).getHumidity().getValue();
 
+            Date date = new Date(16/12/2019);
+
             if(currentCo2 <= co2Min || currentCo2>= co2Max)
             {
+                Warning warning = new Warning(rooms.get(i).getRoomName(),"CO2 sensor",date, co2Max, co2Min, currentCo2);
+                saveToLogWarning(warning);
                 showDialog();
             }
 
             if(currentTemp <= tempMin || currentTemp>= tempMax)
             {
+                Warning warning = new Warning(rooms.get(i).getRoomName(),"Temperature sensor",date, tempMax, tempMin, currentTemp);
+                saveToLogWarning(warning);
                 showDialog();
             }
 
             if(currentHum <= humMin || currentHum >= humMax)
             {
+                Warning warning = new Warning(rooms.get(i).getRoomName(),"Humidity sensor",date, humMax, humMin, currentHum);
+                saveToLogWarning(warning);
                 showDialog();
             }
 
@@ -124,7 +138,20 @@ public class HomeFragment extends Fragment implements RoomAdapter.OnListItemClic
             }
         });
 
+        dialogOk = dialog.findViewById(R.id.btn_OK);
+        dialogOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
+    }
+
+    public void saveToLogWarning(Warning warning){
+       cellarViewModel.insert(warning);
     }
 }
