@@ -19,5 +19,9 @@
     <string name="negative_popup_title">Value out of bounds</string>
     <string name="OK">OK</string>
     <string name="negativeTitle">Warning!</string>
+    <string name="date_and_time">Date and time:</string>
+    <string name="sensor_id">Sensor id:</string>
+    <string name="no_value">no value</string>
+
 
 </resources>

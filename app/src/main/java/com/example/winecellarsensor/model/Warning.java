@@ -33,10 +33,6 @@ public class Warning implements Serializable {
 
   }
 
-  public Warning()
-  {
-
-  }
 
   public void setId(int id) {
     this.id = id;
