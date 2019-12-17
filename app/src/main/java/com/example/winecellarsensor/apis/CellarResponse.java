@@ -1,6 +1,5 @@
 package com.example.winecellarsensor.apis;
 
-import com.example.winecellarsensor.model.Measurements;
 import com.example.winecellarsensor.model.Room;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

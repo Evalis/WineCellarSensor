@@ -2,12 +2,7 @@ package com.example.winecellarsensor.database;
 
 import android.content.Context;
 import android.os.AsyncTask;
-
-
 import com.example.winecellarsensor.model.Warning;
-
-import java.util.Date;
-
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;

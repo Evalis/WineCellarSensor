@@ -6,13 +6,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.example.winecellarsensor.R;
 import com.example.winecellarsensor.model.Room;
-
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 import androidx.recyclerview.widget.RecyclerView;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {

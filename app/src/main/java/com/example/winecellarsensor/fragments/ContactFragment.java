@@ -1,15 +1,11 @@
 package com.example.winecellarsensor.fragments;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-
 import com.example.winecellarsensor.R;
-
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -18,9 +14,6 @@ public class ContactFragment extends Fragment {
     private CardView call;
     private CardView email;
     private CardView message;
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,7 +41,6 @@ public class ContactFragment extends Fragment {
             }
         });
         return rootView;
-
     }
 
     private void sendMessage(View view) {

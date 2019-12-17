@@ -4,17 +4,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.winecellarsensor.R;
 import com.example.winecellarsensor.model.Warning;
 import com.example.winecellarsensor.viewModel.CellarViewModel;
-
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 public class WarningAdapter extends RecyclerView.Adapter<WarningAdapter.ViewHolder> {

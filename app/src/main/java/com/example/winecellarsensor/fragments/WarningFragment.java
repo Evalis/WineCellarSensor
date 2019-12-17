@@ -6,14 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.example.winecellarsensor.R;
 import com.example.winecellarsensor.adapters.WarningAdapter;
 import com.example.winecellarsensor.model.Warning;
 import com.example.winecellarsensor.viewModel.CellarViewModel;
-
 import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;

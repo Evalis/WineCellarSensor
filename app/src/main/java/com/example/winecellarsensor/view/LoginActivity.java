@@ -1,12 +1,10 @@
 package com.example.winecellarsensor.view;
 
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import com.example.winecellarsensor.R;
 import com.example.winecellarsensor.viewModel.CellarViewModel;

@@ -6,9 +6,7 @@ import com.example.winecellarsensor.model.Measurements;
 import com.example.winecellarsensor.model.Room;
 import com.example.winecellarsensor.model.Warning;
 import com.example.winecellarsensor.repositories.CellarRepository;
-
 import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;

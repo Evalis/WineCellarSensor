@@ -1,9 +1,5 @@
 package com.example.winecellarsensor.apis;
 
-
-
-import com.example.winecellarsensor.model.Measurements;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

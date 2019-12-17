@@ -13,11 +13,9 @@ import com.example.winecellarsensor.database.WarningDatabase;
 import com.example.winecellarsensor.model.Measurements;
 import com.example.winecellarsensor.model.Room;
 import com.example.winecellarsensor.model.Warning;
-
 import java.util.List;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
