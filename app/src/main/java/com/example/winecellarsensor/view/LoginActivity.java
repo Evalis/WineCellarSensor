@@ -20,7 +20,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button btn_login;
     private EditText mCellarID;
-    private CheckBox box;
     private CellarViewModel cellarViewModel;
 
     @Override
@@ -33,7 +32,6 @@ public class LoginActivity extends AppCompatActivity {
         cellarViewModel = ViewModelProviders.of(this).get(CellarViewModel.class);
         btn_login = findViewById(R.id.btn_login);
         mCellarID = findViewById(R.id.cellarID);
-        box = findViewById(R.id.checkbox);
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override

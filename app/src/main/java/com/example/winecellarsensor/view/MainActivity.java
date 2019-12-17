@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,9 +30,19 @@ public class MainActivity extends AppCompatActivity {
 
         cellarViewModel = ViewModelProviders.of(this).get(CellarViewModel.class);
         SharedPreferences prefs = getSharedPreferences("MyPreferences", MODE_PRIVATE);
-        String id = prefs.getString("cellarID", null);
-        cellarViewModel.updateCellar(id);
+        final String id = prefs.getString("cellarID", null);
 
+
+        final Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                cellarViewModel.updateCellar(id);
+
+                handler.postDelayed(this, 3600000);
+            }
+        };
+        handler.postDelayed(runnable, 0);
 
         Toolbar toolbar = findViewById(R.id.tool);
         setSupportActionBar(toolbar);

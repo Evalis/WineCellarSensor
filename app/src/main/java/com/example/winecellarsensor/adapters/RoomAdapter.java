@@ -8,6 +8,9 @@ import com.example.winecellarsensor.R;
 import com.example.winecellarsensor.model.Room;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +23,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
 
     private List<Room> rooms;
     final private OnListItemClickListener mOnListItemClickListener;
+    SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy hh:mm");
 
     public RoomAdapter(OnListItemClickListener listener) {
         mOnListItemClickListener = listener;
@@ -36,6 +40,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
         viewHolder.co2.setText(rooms.get(position).getCo2().getValue().toString());
         viewHolder.temperature.setText(rooms.get(position).getTemperature().getValue().toString());
         viewHolder.humidity.setText(rooms.get(position).getHumidity().getValue().toString());
+        String lastSync = format.format(new Date());
+        viewHolder.lastSync.setText("Last sync: " + lastSync);
     }
 
 
@@ -62,7 +68,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView roomName, co2, temperature, humidity;
+        TextView roomName, co2, temperature, humidity, lastSync;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -70,6 +76,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
             co2 = itemView.findViewById(R.id.co2);
             temperature = itemView.findViewById(R.id.temperature);
             humidity = itemView.findViewById(R.id.humidity);
+            lastSync = itemView.findViewById(R.id.lastSync);
 
             itemView.setOnClickListener(this);
         }
