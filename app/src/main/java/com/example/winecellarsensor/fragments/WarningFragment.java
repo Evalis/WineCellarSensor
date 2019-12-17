@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NotificationsFragment extends Fragment {
+public class WarningFragment extends Fragment {
 
 
     RecyclerView warningsList;

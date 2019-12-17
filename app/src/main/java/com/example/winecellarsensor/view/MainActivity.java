@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import com.example.winecellarsensor.R;
 import com.example.winecellarsensor.viewModel.CellarViewModel;
 import com.example.winecellarsensor.fragments.HomeFragment;
-import com.example.winecellarsensor.fragments.NotificationsFragment;
+import com.example.winecellarsensor.fragments.WarningFragment;
 import com.example.winecellarsensor.fragments.ContactFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                         selectedFragment =  new ContactFragment();
                         break;
                     case R.id.nav_notifications:
-                        selectedFragment = new NotificationsFragment();
+                        selectedFragment = new WarningFragment();
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();

@@ -20,6 +20,7 @@ import com.example.winecellarsensor.model.Measurements;
 import com.example.winecellarsensor.model.Temperature;
 import com.example.winecellarsensor.viewModel.CellarViewModel;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
@@ -28,13 +29,20 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -44,9 +52,8 @@ public class MonthlyFragment extends Fragment {
     private LineChart lineChartTemperature;
     private LineChart lineChartHumidity;
     private CellarViewModel cellarViewModel;
-    private Date date = new Date(1576423531877l);
-    private Date date2 = new Date(1576423617813l);
-    private String[]dates = new String[]{date.toString(),date2.toString()};
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -71,14 +78,14 @@ public class MonthlyFragment extends Fragment {
 
                 for (Co2 co2:measurements.getCo2List()) {
                     co2EntriesMonthly.add(new Entry(co2.getDate().getTime(),co2.getValue().floatValue()));
-                    //Log.i("Lucika", co2Entries.get(co2Entries.size()-1).getX()+"");
+                    Log.i("Adika", co2.getDate().toString() +", "+ co2.getDate().getTime());
                 }
+
+
 
                 for (Temperature temperature:measurements.getTemperatureList()) {
                     temperatureEntriesMonthly.add(new Entry(temperature.getDate().getTime(),temperature.getValue().floatValue()));
-
                 }
-                Log.i("Lucbebi", temperatureEntriesMonthly.size()+", "+measurements.getTemperatureList().size());
 
                 for (Humidity humidity:measurements.getHumidityList()) {
                     humidityEntriesMonthly.add(new Entry(humidity.getDate().getTime(),humidity.getValue().floatValue()));
@@ -102,73 +109,14 @@ public class MonthlyFragment extends Fragment {
                     }
                 });
 
+
+
         createLineChartCo2(lineChartCo2,co2EntriesMonthly,co2EntriesMonthly.get(co2EntriesMonthly.size()-1).getX(),co2EntriesMonthly.get(0).getX());
         createLineChartTemperature(lineChartTemperature,temperatureEntriesMonthly,temperatureEntriesMonthly.get(temperatureEntriesMonthly.size()-1).getX(),temperatureEntriesMonthly.get(0).getX());
         createLineChartHumidity(lineChartHumidity,humidityEntriesMonthly,humidityEntriesMonthly.get(humidityEntriesMonthly.size()-1).getX(),humidityEntriesMonthly.get(0).getX());
             }
         });
         return rootView;
-    }
-
-    private ArrayList<Entry> getValuesCo2(){
-        ArrayList<Entry> entries = new ArrayList<>();
-
-        entries.add(new Entry(date.getTime(), 300));
-        entries.add(new Entry(date2.getTime(), 250));
-       /* entries.add(new Entry(2, 400));
-        entries.add(new Entry(3, 640));
-        entries.add(new Entry(4, 700));
-        entries.add(new Entry(5, 900));
-        entries.add(new Entry(6, 800));
-        entries.add(new Entry(7, 1500));
-        entries.add(new Entry(8, 1250));
-        entries.add(new Entry(9, 1000));
-        entries.add(new Entry(10, 4000));
-        entries.add(new Entry(11, 5000));
-        entries.add(new Entry(12, 900));
-        entries.add(new Entry(13, 400));
-        entries.add(new Entry(14, 600));
-        entries.add(new Entry(15, 300));
-        entries.add(new Entry(16, 600));
-        entries.add(new Entry(17, 150));
-        entries.add(new Entry(18, 1000));
-        entries.add(new Entry(19, 550));
-        entries.add(new Entry(20, 780));
-        entries.add(new Entry(21, 920));
-        entries.add(new Entry(22, 390));
-        entries.add(new Entry(23, 230));*/
-
-        return entries;
-    }
-
-    private ArrayList<Entry> getValuesTemperature(){
-
-        ArrayList<Entry> entries = new ArrayList<>();
-
-        entries.add(new Entry(0, 12));
-        entries.add(new Entry(1, 18));
-        entries.add(new Entry(2, -15));
-        entries.add(new Entry(3, 10));
-        entries.add(new Entry(4, 20));
-        entries.add(new Entry(5, 11));
-        entries.add(new Entry(6, 24));
-
-        return entries;
-    }
-
-    private ArrayList<Entry> getValuesHumidity(){
-        ArrayList<Entry> entries = new ArrayList<>();
-
-        entries.add(new Entry(0, 90));
-        entries.add(new Entry(1, 30));
-        entries.add(new Entry(2, 15));
-        entries.add(new Entry(3, 40));
-        entries.add(new Entry(4, 40));
-        entries.add(new Entry(5, 60));
-        entries.add(new Entry(6, 35));
-
-
-        return entries;
     }
 
     private void createLineChartCo2(LineChart lineChartCo2, ArrayList<Entry> valuesCo2, float max, float min) {
@@ -205,10 +153,15 @@ public class MonthlyFragment extends Fragment {
         XAxis xAxis = lineChartCo2.getXAxis();
         xAxis.enableGridDashedLine(10f, 10f, 0f);
         xAxis.setAxisMaximum(max);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(dates));
         xAxis.setTextColor(Color.WHITE);
         xAxis.setAxisMinimum(min);
+        xAxis.setDrawGridLines(true);
         xAxis.setDrawLimitLinesBehindData(true);
+        xAxis.setLabelCount(valuesCo2.size());
+        xAxis.setPosition(XAxis.XAxisPosition.TOP);
+        xAxis.setSpaceMin(2f);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setValueFormatter(new MyValueFormatter());
 
         YAxis leftAxis = lineChartCo2.getAxisLeft();
         leftAxis.removeAllLimitLines();
@@ -252,7 +205,7 @@ public class MonthlyFragment extends Fragment {
         lineChartCo2.setDrawGridBackground(false);
         lineChartCo2.setGridBackgroundColor(Color.BLACK);
         lineChartCo2.setBackgroundColor(Color.TRANSPARENT);
-        lineChartCo2.setTouchEnabled(true);
+        lineChartCo2.setTouchEnabled(false);
         lineChartCo2.setPinchZoom(true);
         lineChartCo2.getData().notifyDataChanged();
 
@@ -302,14 +255,16 @@ public class MonthlyFragment extends Fragment {
         xAxis.setTextColor(Color.WHITE);
         xAxis.setAxisMinimum(min);
         xAxis.setDrawLimitLinesBehindData(true);
+        xAxis.setLabelCount(valuesTemperature.size(), true);
+        xAxis.setValueFormatter(new MyValueFormatter());
 
         YAxis leftAxis = lineChartTemperature.getAxisLeft();
         leftAxis.removeAllLimitLines();
         leftAxis.setTextColor(Color.WHITE);
         leftAxis.addLimitLine(ll1);
         leftAxis.addLimitLine(ll2);
-        leftAxis.setAxisMaximum(25f);
-        leftAxis.setAxisMinimum(-20f);
+        leftAxis.setAxisMaximum(50f);
+        leftAxis.setAxisMinimum(0f);
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
         leftAxis.setDrawZeroLine(true);
         leftAxis.setDrawLimitLinesBehindData(true);
@@ -394,6 +349,8 @@ public class MonthlyFragment extends Fragment {
         xAxis.setTextColor(Color.WHITE);
         xAxis.setAxisMinimum(min);
         xAxis.setDrawLimitLinesBehindData(true);
+        xAxis.setLabelCount(valuesHumidity.size(), true);
+        xAxis.setValueFormatter(new MyValueFormatter());
 
         YAxis leftAxis = lineChartHumidity.getAxisLeft();
         leftAxis.removeAllLimitLines();
@@ -451,4 +408,18 @@ public class MonthlyFragment extends Fragment {
         legendHumidity.setFormToTextSpace(10f);
     }
 
+    private class MyValueFormatter implements IAxisValueFormatter {
+        private SimpleDateFormat mFormat;
+        public MyValueFormatter() {
+            mFormat = new SimpleDateFormat("MM/dd");
+            mFormat.setTimeZone(TimeZone.getTimeZone("CET"));
+
+        }
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            Log.i("Adika", new Date((long)value)+", " + value);
+            return mFormat.format(new Date((long)value));
+
+        }
+    }
 }

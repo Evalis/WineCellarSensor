@@ -30,6 +30,7 @@ public class CellarRepository {
     private MutableLiveData<List<Room>> rooms;
     private MutableLiveData<Measurements> weeklyMeasurements;
     private MutableLiveData<Measurements> monthlyMeasurements;
+    private MutableLiveData<Measurements> dailyMeasurements;
 
     private CellarRepository(Application application)
     {
@@ -39,6 +40,7 @@ public class CellarRepository {
         warnings = warningDao.getAllWarnings();
         weeklyMeasurements = new MutableLiveData<Measurements>();
         monthlyMeasurements = new MutableLiveData<Measurements>();
+        dailyMeasurements = new MutableLiveData<Measurements>();
     }
 
 
@@ -210,4 +212,29 @@ public class CellarRepository {
         return monthlyMeasurements;
     }
 
+    public void getDailyMeasurements(String roomName, String cellarID){
+        CellarAPI cellarAPI = CellarServiceGenerator.getCellarAPI();
+        Call<MeasurementsResponse> call = cellarAPI.getAllDailyMeasurements(roomName, cellarID);
+        call.enqueue(new Callback<MeasurementsResponse>() {
+            @Override
+            public void onResponse(Call<MeasurementsResponse> call, Response<MeasurementsResponse> response) {
+                Log.i("Retrofit", "Response received " + response.code() + ", "+ response.message() + ", "+ response.body() + ", "+ response.errorBody() + ", "+ response.headers() + ", "+ response.raw());
+                if (response.code() == 200) {
+                    Log.i("Retrofit", "Good response");
+                    dailyMeasurements.setValue(response.body().getAllDailyMeasurements());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MeasurementsResponse> call, Throwable t) {
+                Log.i("RetrofitError", "" + t.getMessage());
+                Log.i("Retrofit", "Something went wrong :(" + call.toString());
+            }
+        });
+    }
+
+    public LiveData<Measurements> getDailyMeasurementsLiveData(){
+        return dailyMeasurements;
+    }
 }

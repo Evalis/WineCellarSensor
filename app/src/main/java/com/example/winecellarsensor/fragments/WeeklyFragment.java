@@ -29,8 +29,10 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -65,44 +67,40 @@ public class WeeklyFragment extends Fragment {
         cellarViewModel.getAllWeeklyMeasurements("basement",id);
         cellarViewModel.getWeeklyMeasurementsLiveData().observe(this.getActivity(), new Observer<Measurements>() {
             @Override
-            public void onChanged(Measurements measurements) {
-                ArrayList<Entry> co2EntriesWeekly = new ArrayList<>();
-                ArrayList<Entry> temperatureEntriesWeekly = new ArrayList<>();
-                ArrayList<Entry> humidityEntriesWeekly = new ArrayList<>();
+                public void onChanged(Measurements measurements) {
+                    ArrayList<Entry> co2EntriesWeekly = new ArrayList<>();
+                    ArrayList<Entry> temperatureEntriesWeekly = new ArrayList<>();
+                    ArrayList<Entry> humidityEntriesWeekly = new ArrayList<>();
 
-                for (Co2 co2:measurements.getCo2List()) {
-                    co2EntriesWeekly.add(new Entry(co2.getDate().getTime(),co2.getValue().floatValue()));
-                    //Log.i("Lucika", co2Entries.get(co2Entries.size()-1).getX()+"");
-                }
+                    for (Co2 co2:measurements.getCo2List()) {
+                        co2EntriesWeekly.add(new Entry(co2.getDate().getTime(),co2.getValue().floatValue()));
+                    }
 
-                for (Temperature temperature:measurements.getTemperatureList()) {
-                    temperatureEntriesWeekly.add(new Entry(temperature.getDate().getTime(),temperature.getValue().floatValue()));
+                    for (Temperature temperature:measurements.getTemperatureList()) {
+                        temperatureEntriesWeekly.add(new Entry(temperature.getDate().getTime(),temperature.getValue().floatValue()));
+                    }
 
-                }
-
-               // Log.i("Lucbebi", temperatureEntriesWeekly.size()+", "+measurements.getTemperatureList().size());
-                for (Humidity humidity:measurements.getHumidityList()) {
-                    humidityEntriesWeekly.add(new Entry(humidity.getDate().getTime(),humidity.getValue().floatValue()));
-                }
-                Collections.sort(co2EntriesWeekly, new Comparator<Entry>() {
+                    for (Humidity humidity:measurements.getHumidityList()) {
+                        humidityEntriesWeekly.add(new Entry(humidity.getDate().getTime(),humidity.getValue().floatValue()));
+                    }
+                    Collections.sort(co2EntriesWeekly, new Comparator<Entry>() {
+                        @Override
+                        public int compare(Entry o1, Entry o2) {
+                            return Float.compare(o1.getX(),o2.getX());
+                        }
+                    });
+                    Collections.sort(temperatureEntriesWeekly, new Comparator<Entry>() {
+                        @Override
+                        public int compare(Entry o1, Entry o2) {
+                            return Float.compare(o1.getX(),o2.getX());
+                        }
+                    });
+                    Collections.sort(humidityEntriesWeekly, new Comparator<Entry>() {
                     @Override
                     public int compare(Entry o1, Entry o2) {
                         return Float.compare(o1.getX(),o2.getX());
                     }
                 });
-                Collections.sort(temperatureEntriesWeekly, new Comparator<Entry>() {
-                    @Override
-                    public int compare(Entry o1, Entry o2) {
-                        return Float.compare(o1.getX(),o2.getX());
-                    }
-                });
-                Collections.sort(humidityEntriesWeekly, new Comparator<Entry>() {
-                    @Override
-                    public int compare(Entry o1, Entry o2) {
-                        return Float.compare(o1.getX(),o2.getX());
-                    }
-                });
-               // Log.i("Lucika", temperatureEntriesWeekly.size()+", "+(temperatureEntriesWeekly.size()-1));
                 createLineChartCo2(lineChartCo2,co2EntriesWeekly,co2EntriesWeekly.get(co2EntriesWeekly.size()-1).getX(),co2EntriesWeekly.get(0).getX());
                 createLineChartTemperature(lineChartTemperature,temperatureEntriesWeekly,temperatureEntriesWeekly.get(temperatureEntriesWeekly.size()-1).getX(),temperatureEntriesWeekly.get(0).getX());
                 createLineChartHumidity(lineChartHumidity,humidityEntriesWeekly,humidityEntriesWeekly.get(humidityEntriesWeekly.size()-1).getX(),humidityEntriesWeekly.get(0).getX());
@@ -145,23 +143,14 @@ public class WeeklyFragment extends Fragment {
         XAxis xAxis = lineChartCo2.getXAxis();
         xAxis.enableGridDashedLine(10f, 10f, 0f);
         xAxis.setAxisMaximum(max);
-       // xAxis.setLabelCount(valuesCo2.size());
-      /*  List<String> dates = new ArrayList<>();
-        for (Entry entry: valuesCo2) {
-            Calendar calendar=Calendar.getInstance();
-            calendar.setTimeInMillis((long)entry.getX());
-            //dates.add(calendar.getDisplayName(Calendar.DATE,Calendar.SHORT,new Locale("EN")));
-            Date date = new Date((long)entry.getX());
-            Format format = new SimpleDateFormat("MM dd");
-            dates.add(format.format(date));
-            Log.i("Lucibaba",  format.format(date)+"");
-        }*/
-      //  xAxis.setValueFormatter(new IndexAxisValueFormatter(dates));
+        xAxis.setLabelCount(valuesCo2.size());
         xAxis.setTextColor(Color.WHITE);
         xAxis.setAxisMinimum(min);
         xAxis.setDrawLimitLinesBehindData(true);
-       // xAxis.setGranularityEnabled(true);
-        //xAxis.setGranularity(2);
+        xAxis.setLabelCount(valuesCo2.size(), true);
+        xAxis.setValueFormatter(new MyValueFormatter());
+        xAxis.setGranularityEnabled(true);
+        xAxis.setGranularity(2);
 
         YAxis leftAxis = lineChartCo2.getAxisLeft();
         leftAxis.removeAllLimitLines();
@@ -255,13 +244,15 @@ public class WeeklyFragment extends Fragment {
         xAxis.setTextColor(Color.WHITE);
         xAxis.setAxisMinimum(min);
         xAxis.setDrawLimitLinesBehindData(true);
+        xAxis.setLabelCount(valuesTemperature.size(), true);
+        xAxis.setValueFormatter(new MyValueFormatter());
 
         YAxis leftAxis = lineChartTemperature.getAxisLeft();
         leftAxis.removeAllLimitLines();
         leftAxis.setTextColor(Color.WHITE);
         leftAxis.addLimitLine(ll1);
         leftAxis.addLimitLine(ll2);
-        leftAxis.setAxisMaximum(30f);
+        leftAxis.setAxisMaximum(40f);
         leftAxis.setAxisMinimum(0f);
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
         leftAxis.setDrawZeroLine(true);
@@ -347,13 +338,15 @@ public class WeeklyFragment extends Fragment {
         xAxis.setTextColor(Color.WHITE);
         xAxis.setAxisMinimum(min);
         xAxis.setDrawLimitLinesBehindData(true);
+        xAxis.setLabelCount(valuesHumidity.size(), true);
+        xAxis.setValueFormatter(new MyValueFormatter());
 
         YAxis leftAxis = lineChartHumidity.getAxisLeft();
         leftAxis.removeAllLimitLines();
         leftAxis.setTextColor(Color.WHITE);
         leftAxis.addLimitLine(ll1);
         leftAxis.addLimitLine(ll2);
-        leftAxis.setAxisMaximum(30f);
+        leftAxis.setAxisMaximum(44f);
         leftAxis.setAxisMinimum(10f);
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
         leftAxis.setDrawZeroLine(true);
@@ -402,6 +395,19 @@ public class WeeklyFragment extends Fragment {
         legendHumidity.setFormSize(10f);
         legendHumidity.setXEntrySpace(5f);
         legendHumidity.setFormToTextSpace(10f);
+    }
+
+    private class MyValueFormatter implements IAxisValueFormatter {
+        private SimpleDateFormat mFormat;
+
+        public MyValueFormatter() {
+            mFormat = new SimpleDateFormat("MM/dd");
+        }
+
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            return mFormat.format(new Date((long)value));
+        }
     }
 
     }
