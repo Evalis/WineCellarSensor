@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:background="@color/colorAccent"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:layout_margin="20dp"
+    android:padding="10dp">
 
 
     <TextView
@@ -15,7 +16,7 @@
         android:ellipsize="marquee"
         android:fontFamily="cursive"
         android:text="Room name"
-        android:textColor="@color/colorToolbar"
+        android:textColor="@color/colorWhite"
         android:textSize="35sp" />
 
     <TableLayout
@@ -31,7 +32,7 @@
                 android:layout_weight="1"
                 android:text="@string/date_and_time"
                 android:textAlignment="viewStart"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:id="@+id/date_time_value"
@@ -40,7 +41,7 @@
                 android:layout_weight="1"
                 android:text="@string/no_value"
                 android:textAlignment="viewStart"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/colorWhite" />
 
         </TableRow>
 
@@ -53,7 +54,7 @@
                 android:layout_weight="1"
                 android:text="@string/sensor_id"
                 android:textAlignment="viewStart"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:id="@+id/sensor_id_value"
@@ -62,7 +63,7 @@
                 android:layout_weight="1"
                 android:text="@string/no_value"
                 android:textAlignment="viewStart"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/colorWhite" />
         </TableRow>
 
         <TableRow android:padding="5dp">
@@ -74,7 +75,7 @@
                 android:layout_weight="1"
                 android:text="Value:"
                 android:textAlignment="viewStart"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:id="@+id/value_value"
@@ -83,7 +84,7 @@
                 android:layout_weight="1"
                 android:text="@string/no_value"
                 android:textAlignment="viewStart"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/colorWhite" />
         </TableRow>
 
         <TableRow android:padding="5dp">
@@ -95,7 +96,7 @@
                 android:layout_weight="1"
                 android:text="Min value:"
                 android:textAlignment="viewStart"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:id="@+id/min_value_value"
@@ -104,7 +105,7 @@
                 android:layout_weight="1"
                 android:text="@string/no_value"
                 android:textAlignment="viewStart"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/colorWhite" />
         </TableRow>
 
         <TableRow android:padding="5dp">
@@ -116,7 +117,7 @@
                 android:layout_weight="1"
                 android:text="Max value:"
                 android:textAlignment="viewStart"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:id="@+id/max_value_value"
@@ -125,7 +126,7 @@
                 android:layout_weight="1"
                 android:text="@string/no_value"
                 android:textAlignment="viewStart"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/colorWhite" />
         </TableRow>
 
     </TableLayout>

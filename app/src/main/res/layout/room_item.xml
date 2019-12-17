@@ -3,7 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#e4e4e4"
+    android:background="@color/colorAccent"
     android:orientation="vertical">
 
 
@@ -23,7 +23,7 @@
         android:id="@+id/simpleTableLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="@color/colorWhite"
         android:stretchColumns="*">
 
         <TableRow
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:text="Text 1"
                 android:textAlignment="textEnd"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorDark"
                 android:textSize="20dp" />
 
             <ImageView
@@ -57,7 +57,7 @@
                 android:text="Text 2"
                 android:textAlignment="textEnd"
 
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorDark"
                 android:textSize="20dp" />
 
             <ImageView
@@ -73,7 +73,7 @@
                 android:layout_height="match_parent"
                 android:text="Text 3"
                 android:textAlignment="textEnd"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorDark"
                 android:textSize="20dp" />
 
             <ImageView

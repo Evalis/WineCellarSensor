@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolSettings"
@@ -26,12 +27,13 @@
   
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent">
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp" >
+            android:layout_margin="10dp">
 
             <TextView
                 android:id="@+id/co2setting"
@@ -143,7 +145,8 @@
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:text="Save"
-        android:textColor="@color/colorDark"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:textColor="@color/colorWhite"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_settings"

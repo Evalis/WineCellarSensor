@@ -9,18 +9,14 @@ import android.widget.Toast;
 
 import com.example.winecellarsensor.R;
 import com.example.winecellarsensor.adapters.WarningAdapter;
-import com.example.winecellarsensor.model.Room;
 import com.example.winecellarsensor.model.Warning;
 import com.example.winecellarsensor.viewModel.CellarViewModel;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,7 +34,7 @@ public class WarningFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         cellarViewModel = ViewModelProviders.of(this).get(CellarViewModel.class);
-        View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_warning, container, false);
         warningsList = rootView.findViewById(R.id.rv_warning);
         warningsList.hasFixedSize();
         warningsList.setLayoutManager(new LinearLayoutManager(c));

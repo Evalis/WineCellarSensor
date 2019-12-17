@@ -3,7 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e4e4e4"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <include layout="@layout/activity_toolbar"
@@ -18,7 +18,7 @@
             android:padding="35dp"
             android:fontFamily="cursive"
             android:text="Item1"
-            android:textColor="@color/colorToolbar"
+            android:textColor="@color/colorWhite"
             android:textSize="35sp" />
 
 
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_margin="15dp"
         android:layout_height="wrap_content"
-        android:background="#ffff"
+        android:background="@color/colorAccent"
         android:stretchColumns="*">
 
         <TableRow
@@ -36,7 +36,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:orientation="vertical"
-            android:weightSum="2">
+            android:background="@color/colorWhite"
+            android:weightSum="2"
+            android:layout_margin="10dp">
 
             <TextView
                 android:id="@+id/co2"
@@ -44,8 +46,9 @@
                 android:layout_height="100dp"
                 android:padding="18dip"
                 android:text="Text 1"
-                android:textColor="#000"
-                android:textSize="22dp" />
+                android:textColor="@color/colorDark"
+                android:textSize="20sp"
+                android:layout_gravity="center"/>
 
             <ImageView
                 android:id="@+id/ImageView01"
@@ -62,7 +65,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:orientation="vertical"
-            android:weightSum="2">
+            android:background="@color/colorWhite"
+            android:weightSum="2"
+            android:layout_margin="10dp">
 
             <TextView
                 android:id="@+id/humidity"
@@ -70,8 +75,9 @@
                 android:layout_height="100dp"
                 android:padding="18dip"
                 android:text="Text 2"
-                android:textColor="#000"
-                android:textSize="22dp" />
+                android:textColor="@color/colorDark"
+                android:textSize="20sp"
+                android:layout_gravity="center"/>
 
             <ImageView
                 android:id="@+id/ImageView02"
@@ -88,7 +94,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:orientation="vertical"
-            android:weightSum="2">
+            android:background="@color/colorWhite"
+            android:weightSum="2"
+            android:layout_margin="10dp">
 
             <TextView
                 android:id="@+id/temperature"
@@ -96,8 +104,9 @@
                 android:layout_height="100dp"
                 android:padding="18dip"
                 android:text="Text 3"
-                android:textColor="#000"
-                android:textSize="22dp" />
+                android:textColor="@color/colorDark"
+                android:textSize="20sp"
+                android:layout_gravity="center"/>
 
             <ImageView
                 android:id="@+id/ImageView03"

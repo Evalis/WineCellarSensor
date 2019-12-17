@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_nav"
-        android:layout_below="@id/tool" />
+        android:layout_below="@id/tool"
+        android:background="@color/colorAccent"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"

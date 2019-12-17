@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorAccent"
     android:orientation="vertical">
 
@@ -13,7 +14,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="30dp"
-        android:onClick="sendEmail">
+        android:onClick="sendEmail"
+        app:cardBackgroundColor="@color/colorPrimary">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,7 +24,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <ImageView
                 android:layout_width="70dp"
@@ -36,6 +39,7 @@
                 android:layout_marginLeft="50dp"
                 android:fontFamily="cursive"
                 android:text="@string/app_email"
+                android:textColor="@color/colorWhite"
                 android:textAlignment="center"
                 android:textSize="30dp" />
         </LinearLayout>
@@ -50,7 +54,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="30dp"
-        android:onClick="makeCall">
+        android:onClick="makeCall"
+        app:cardBackgroundColor="@color/colorPrimary">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,7 +79,8 @@
                 android:text="@string/app_call"
                 android:textAlignment="center"
                 android:fontFamily="cursive"
-                android:textSize="30dp" />
+                android:textSize="30dp"
+                android:textColor="@color/colorWhite"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -86,7 +92,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="30dp"
-        android:onClick="sendMessage">
+        android:onClick="sendMessage"
+        app:cardBackgroundColor="@color/colorPrimary">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -110,7 +117,8 @@
                 android:fontFamily="cursive"
                 android:text="@string/app_message"
                 android:textAlignment="center"
-                android:textSize="30dp" />
+                android:textSize="30dp"
+                android:textColor="@color/colorWhite"/>
 
 
         </LinearLayout>
