@@ -45,8 +45,8 @@ public class WeeklyFragment extends Fragment {
     private LineChart lineChartTemperature;
     private LineChart lineChartHumidity;
     private CellarViewModel cellarViewModel;
-    private Date date = new Date(1576423531877l);
-    private Date date2 = new Date(1576423617813l);
+   // private Date date = new Date(1576423531877l);
+    //private Date date2 = new Date(1576423617813l);
    // private String[]dates = new String[]{date.toString(),date2.toString()};
     //private int number=0;
 
@@ -66,83 +66,49 @@ public class WeeklyFragment extends Fragment {
         cellarViewModel.getWeeklyMeasurementsLiveData().observe(this.getActivity(), new Observer<Measurements>() {
             @Override
             public void onChanged(Measurements measurements) {
-                ArrayList<Entry> co2Entries = new ArrayList<>();
-                ArrayList<Entry> temperatureEntries = new ArrayList<>();
-                ArrayList<Entry> humidityEntries = new ArrayList<>();
+                ArrayList<Entry> co2EntriesWeekly = new ArrayList<>();
+                ArrayList<Entry> temperatureEntriesWeekly = new ArrayList<>();
+                ArrayList<Entry> humidityEntriesWeekly = new ArrayList<>();
 
                 for (Co2 co2:measurements.getCo2List()) {
-                    co2Entries.add(new Entry(co2.getDate().getTime(),co2.getValue().floatValue()));
+                    co2EntriesWeekly.add(new Entry(co2.getDate().getTime(),co2.getValue().floatValue()));
                     //Log.i("Lucika", co2Entries.get(co2Entries.size()-1).getX()+"");
                 }
 
                 for (Temperature temperature:measurements.getTemperatureList()) {
-                    temperatureEntries.add(new Entry(temperature.getDate().getTime(),temperature.getValue().floatValue()));
+                    temperatureEntriesWeekly.add(new Entry(temperature.getDate().getTime(),temperature.getValue().floatValue()));
 
                 }
 
-                Log.i("Lucbebi", temperatureEntries.size()+", "+measurements.getTemperatureList().size());
+               // Log.i("Lucbebi", temperatureEntriesWeekly.size()+", "+measurements.getTemperatureList().size());
                 for (Humidity humidity:measurements.getHumidityList()) {
-                    humidityEntries.add(new Entry(humidity.getDate().getTime(),humidity.getValue().floatValue()));
+                    humidityEntriesWeekly.add(new Entry(humidity.getDate().getTime(),humidity.getValue().floatValue()));
                 }
-                Collections.sort(co2Entries, new Comparator<Entry>() {
+                Collections.sort(co2EntriesWeekly, new Comparator<Entry>() {
                     @Override
                     public int compare(Entry o1, Entry o2) {
                         return Float.compare(o1.getX(),o2.getX());
                     }
                 });
-                Collections.sort(temperatureEntries, new Comparator<Entry>() {
+                Collections.sort(temperatureEntriesWeekly, new Comparator<Entry>() {
                     @Override
                     public int compare(Entry o1, Entry o2) {
                         return Float.compare(o1.getX(),o2.getX());
                     }
                 });
-                Collections.sort(humidityEntries, new Comparator<Entry>() {
+                Collections.sort(humidityEntriesWeekly, new Comparator<Entry>() {
                     @Override
                     public int compare(Entry o1, Entry o2) {
                         return Float.compare(o1.getX(),o2.getX());
                     }
                 });
-                Log.i("Lucika", temperatureEntries.size()+", "+(temperatureEntries.size()-1));
-                createLineChartCo2(lineChartCo2,co2Entries,co2Entries.get(co2Entries.size()-1).getX(),co2Entries.get(0).getX());
-                createLineChartTemperature(lineChartTemperature,temperatureEntries,temperatureEntries.get(temperatureEntries.size()-1).getX(),temperatureEntries.get(0).getX());
-                createLineChartHumidity(lineChartHumidity,humidityEntries,humidityEntries.get(humidityEntries.size()-1).getX(),humidityEntries.get(0).getX());
+               // Log.i("Lucika", temperatureEntriesWeekly.size()+", "+(temperatureEntriesWeekly.size()-1));
+                createLineChartCo2(lineChartCo2,co2EntriesWeekly,co2EntriesWeekly.get(co2EntriesWeekly.size()-1).getX(),co2EntriesWeekly.get(0).getX());
+                createLineChartTemperature(lineChartTemperature,temperatureEntriesWeekly,temperatureEntriesWeekly.get(temperatureEntriesWeekly.size()-1).getX(),temperatureEntriesWeekly.get(0).getX());
+                createLineChartHumidity(lineChartHumidity,humidityEntriesWeekly,humidityEntriesWeekly.get(humidityEntriesWeekly.size()-1).getX(),humidityEntriesWeekly.get(0).getX());
             }
         });
         return rootView;
-    }
-
-    private ArrayList<Entry> getValuesTemperature(){
-
-        ArrayList<Entry> entries = new ArrayList<>();
-
-        entries.add(new Entry(0, 12));
-        entries.add(new Entry(1, 18));
-        entries.add(new Entry(2, -15));
-        entries.add(new Entry(3, 10));
-        entries.add(new Entry(4, 20));
-        entries.add(new Entry(5, 11));
-        entries.add(new Entry(6, 24));
-        entries.add(new Entry(7, 20));
-        entries.add(new Entry(8, 11));
-        entries.add(new Entry(9, 24));
-        entries.add(new Entry(10, 10));
-
-        return entries;
-    }
-
-    private ArrayList<Entry> getValuesHumidity(){
-
-        ArrayList<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(0, 90));
-        entries.add(new Entry(1, 30));
-        entries.add(new Entry(2, 15));
-        entries.add(new Entry(3, 40));
-        entries.add(new Entry(4, 40));
-        entries.add(new Entry(5, 60));
-        entries.add(new Entry(6, 35));
-
-
-        return entries;
     }
 
     private void createLineChartCo2(LineChart lineChartCo2, ArrayList<Entry> valuesCo2, float max, float min) {

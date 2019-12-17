@@ -27,4 +27,8 @@ public class MeasurementsResponse {
     public Measurements getAllWeeklyMeasurements(){
         return new Measurements(roomName,co2Value,tempValue,humValue);
     }
+
+    public Measurements getAllMonthlyMeasurements(){
+        return new Measurements(roomName,co2Value, tempValue, humValue);
+    }
 }

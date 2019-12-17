@@ -12,8 +12,11 @@ public interface CellarAPI {
     @GET("/api/cellar/GetCurrentRoomValue/{cellarID}")
     Call<CellarResponse> getAllRooms(@Path("cellarID") String cellarID);
 
-    @GET("/api/cellar/GetAllWeeklyValue/{cellarID}/{roomName}")
+    @GET("/api/cellar/GetWeeklyAverageByRoom/{cellarID}/{roomName}")
     Call<MeasurementsResponse> getAllWeeklyMeasurements(@Path("roomName") String roomName, @Path("cellarID") String cellarID);
+
+    @GET("/api/cellar/GetMonthlyAverageByRoom/{cellarID}/{roomName}")
+    Call<MeasurementsResponse> getAllMonthlyMeasurements(@Path("roomName")String roomName, @Path("cellarID")String cellarID);
 
 }
 

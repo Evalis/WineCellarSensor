@@ -29,6 +29,7 @@ public class CellarRepository {
     private static CellarRepository instance;
     private MutableLiveData<List<Room>> rooms;
     private MutableLiveData<Measurements> weeklyMeasurements;
+    private MutableLiveData<Measurements> monthlyMeasurements;
 
     private CellarRepository(Application application)
     {
@@ -37,6 +38,7 @@ public class CellarRepository {
         warningDao = database.warningDao();
         warnings = warningDao.getAllWarnings();
         weeklyMeasurements = new MutableLiveData<Measurements>();
+        monthlyMeasurements = new MutableLiveData<Measurements>();
     }
 
 
@@ -180,6 +182,32 @@ public class CellarRepository {
 
     public LiveData<Measurements> getWeeklyMeasurementsLiveData(){
         return weeklyMeasurements;
+    }
+
+    public void getMonthlyMeasurements(String roomName, String cellarID){
+        CellarAPI cellarAPI = CellarServiceGenerator.getCellarAPI();
+        Call<MeasurementsResponse> call = cellarAPI.getAllMonthlyMeasurements(roomName, cellarID);
+        call.enqueue(new Callback<MeasurementsResponse>() {
+            @Override
+            public void onResponse(Call<MeasurementsResponse> call, Response<MeasurementsResponse> response) {
+                Log.i("Retrofit", "Response received " + response.code() + ", "+ response.message() + ", "+ response.body() + ", "+ response.errorBody() + ", "+ response.headers() + ", "+ response.raw());
+                if (response.code() == 200) {
+                    Log.i("Retrofit", "Good response");
+                    monthlyMeasurements.setValue(response.body().getAllMonthlyMeasurements());
+                    //Log.i("Luci", response.body().getAllWeeklyMeasurements()+"");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MeasurementsResponse> call, Throwable t) {
+                Log.i("RetrofitError", "" + t.getMessage());
+                Log.i("Retrofit", "Something went wrong :(" + call.toString());
+            }
+        });
+    }
+
+    public LiveData<Measurements> getMonthlyMeasurementsLiveData(){
+        return monthlyMeasurements;
     }
 
 }

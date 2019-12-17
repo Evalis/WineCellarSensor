@@ -64,7 +64,14 @@ public class CellarViewModel extends AndroidViewModel {
     }
 
     public void getAllWeeklyMeasurements(String roomName, String cellarId){
-                     repository.getWeeklyMeasurements(roomName, cellarId);
+        repository.getWeeklyMeasurements(roomName, cellarId);
     }
 
+    public LiveData<Measurements> getMonthlyMeasurementsLiveData(){
+        return repository.getMonthlyMeasurementsLiveData();
+    }
+
+    public void getAllMonthlyMeasurements(String roomName, String cellarId){
+        repository.getMonthlyMeasurements(roomName, cellarId);
+    }
 }
