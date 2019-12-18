@@ -8,8 +8,6 @@ import androidx.lifecycle.ViewModelProviders;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import com.example.winecellarsensor.R;
 import com.example.winecellarsensor.viewModel.CellarViewModel;
@@ -29,20 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         cellarViewModel = ViewModelProviders.of(this).get(CellarViewModel.class);
-        SharedPreferences prefs = getSharedPreferences("MyPreferences", MODE_PRIVATE);
-        final String id = prefs.getString("cellarID", null);
-
-
-        final Handler handler = new Handler();
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                cellarViewModel.updateCellar(id);
-
-                handler.postDelayed(this, 3600000);
-            }
-        };
-        handler.postDelayed(runnable, 0);
+        setupHourlyCellarUpdate();
 
         Toolbar toolbar = findViewById(R.id.tool);
         setSupportActionBar(toolbar);
@@ -50,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment(MainActivity.this,cellarViewModel)).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new HomeFragment(MainActivity.this,cellarViewModel)).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -74,12 +60,20 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        MenuItem reload = menu.findItem(R.id.reload);
-        return true;
+    private void setupHourlyCellarUpdate(){
+        SharedPreferences prefs = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        final String id = prefs.getString("cellarID", null);
+
+        final Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                cellarViewModel.updateCellar(id);
+
+                handler.postDelayed(this, 3600000);
+            }
+        };
+        handler.post(runnable);
     }
 }
 

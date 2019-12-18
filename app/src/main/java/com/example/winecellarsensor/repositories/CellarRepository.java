@@ -3,7 +3,6 @@ package com.example.winecellarsensor.repositories;
 import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
-
 import com.example.winecellarsensor.apis.CellarAPI;
 import com.example.winecellarsensor.apis.CellarResponse;
 import com.example.winecellarsensor.apis.CellarServiceGenerator;
@@ -138,7 +137,6 @@ public class CellarRepository {
         call.enqueue(new Callback<CellarResponse>() {
             @Override
             public void onResponse(Call<CellarResponse> call, Response<CellarResponse> response) {
-                Log.i("Retrofit", "Response received " + response.code() + ", "+ response.message() + ", "+ response.body() + ", "+ response.errorBody() + ", "+ response.headers() + ", "+ response.raw());
                 if (response.code() == 200) {
                     Log.i("Retrofit", "Good response");
                     rooms.setValue(response.body().getRooms());
