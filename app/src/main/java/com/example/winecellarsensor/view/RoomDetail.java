@@ -31,8 +31,6 @@ public class RoomDetail extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
-
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
@@ -80,6 +78,7 @@ public class RoomDetail extends AppCompatActivity {
 
     public void showStatistics(View view) {
         Intent i = new Intent(RoomDetail.this, StatisticsActivity.class);
+        i.putExtra("RoomName", room.getRoomName());
         startActivity(i);
     }
 

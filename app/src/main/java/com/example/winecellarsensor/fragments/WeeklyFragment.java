@@ -42,10 +42,15 @@ public class WeeklyFragment extends Fragment {
     private LineChart lineChartTemperature;
     private LineChart lineChartHumidity;
     private CellarViewModel cellarViewModel;
-   // private Date date = new Date(1576423531877l);
-    //private Date date2 = new Date(1576423617813l);
-   // private String[]dates = new String[]{date.toString(),date2.toString()};
-    //private int number=0;
+    private String roomName;
+
+    private float maxLimitCo2;
+    private float maxLimitTemp;
+    private float maxLimitHum;
+    private float minLimitCo2;
+    private float minLimitTemp;
+    private float minLimitHum;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -56,9 +61,31 @@ public class WeeklyFragment extends Fragment {
         lineChartTemperature = rootView.findViewById(R.id.lineChartTemperatureWeekly);
         lineChartHumidity = rootView.findViewById(R.id.lineChartHumidityWeekly);
 
-        cellarViewModel = ViewModelProviders.of(this).get(CellarViewModel.class);
+
         SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        if (savedInstanceState == null) {
+            Bundle extras = this.getActivity().getIntent().getExtras();
+            if (extras == null) {
+                roomName = null;
+            } else {
+                roomName = (String) extras.getSerializable("RoomName");
+            }
+        } else {
+            roomName = (String)savedInstanceState.getSerializable("RoomName");
+        }
+
         String id = prefs.getString("cellarID", null);
+
+        maxLimitCo2 = Float.parseFloat(prefs.getString("Co2MaxRange" + roomName, "40"));
+        maxLimitTemp = Float.parseFloat(prefs.getString("TempMaxRange" + roomName, "40"));
+        maxLimitHum = Float.parseFloat(prefs.getString("HumMaxRange" + roomName, "40"));
+        minLimitCo2 = Float.parseFloat(prefs.getString("Co2MinRange" + roomName, "10"));
+        minLimitTemp = Float.parseFloat(prefs.getString("TempMinRange" + roomName, "10"));
+        minLimitHum = Float.parseFloat(prefs.getString("HumMinRange" + roomName, "10"));
+
+        cellarViewModel = ViewModelProviders.of(this).get(CellarViewModel.class);
+
+
         cellarViewModel.getAllWeeklyMeasurements("basement",id);
         cellarViewModel.getWeeklyMeasurementsLiveData().observe(this.getActivity(), new Observer<Measurements>() {
             @Override
@@ -119,7 +146,7 @@ public class WeeklyFragment extends Fragment {
         llXAxis.setTextSize(10f);
         llXAxis.setTextColor(Color.WHITE);
 
-        LimitLine ll1 = new LimitLine(1000f, "MAX");
+        LimitLine ll1 = new LimitLine(maxLimitCo2, "MAX");
         ll1.setLineWidth(2f);
         ll1.setLineColor(Color.WHITE);
         ll1.enableDashedLine(10f, 10f, 0f);
@@ -127,7 +154,7 @@ public class WeeklyFragment extends Fragment {
         ll1.setTextSize(10f);
         ll1.setTextColor(Color.WHITE);
 
-        LimitLine ll2 = new LimitLine(250f, "MIN");
+        LimitLine ll2 = new LimitLine(minLimitCo2, "MIN");
         ll2.setLineWidth(2f);
         ll2.setLineColor(Color.WHITE);
         ll2.enableDashedLine(10f, 10f, 0f);
@@ -217,7 +244,7 @@ public class WeeklyFragment extends Fragment {
         llXAxis.setTextSize(10f);
         llXAxis.setTextColor(Color.WHITE);
 
-        LimitLine ll1 = new LimitLine(20f, "MAX");
+        LimitLine ll1 = new LimitLine(maxLimitTemp, "MAX");
         ll1.setLineWidth(2f);
         ll1.setLineColor(Color.WHITE);
         ll1.enableDashedLine(10f, 10f, 0f);
@@ -225,7 +252,7 @@ public class WeeklyFragment extends Fragment {
         ll1.setTextSize(10f);
         ll1.setTextColor(Color.WHITE);
 
-        LimitLine ll2 = new LimitLine(-10f, "MIN");
+        LimitLine ll2 = new LimitLine(minLimitTemp, "MIN");
         ll2.setLineWidth(2f);
         ll2.setLineColor(Color.WHITE);
         ll2.enableDashedLine(10f, 10f, 0f);
@@ -311,7 +338,7 @@ public class WeeklyFragment extends Fragment {
         llXAxis.setTextSize(10f);
         llXAxis.setTextColor(Color.WHITE);
 
-        LimitLine ll1 = new LimitLine(60f, "MAX");
+        LimitLine ll1 = new LimitLine(maxLimitHum, "MAX");
         ll1.setLineWidth(2f);
         ll1.setLineColor(Color.WHITE);
         ll1.enableDashedLine(10f, 10f, 0f);
@@ -319,7 +346,7 @@ public class WeeklyFragment extends Fragment {
         ll1.setTextSize(10f);
         ll1.setTextColor(Color.WHITE);
 
-        LimitLine ll2 = new LimitLine(30f, "MIN");
+        LimitLine ll2 = new LimitLine(minLimitHum, "MIN");
         ll2.setLineWidth(2f);
         ll2.setLineColor(Color.WHITE);
         ll2.enableDashedLine(10f, 10f, 0f);

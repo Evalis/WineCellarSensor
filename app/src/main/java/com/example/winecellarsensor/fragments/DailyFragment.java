@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,14 @@ public class DailyFragment extends Fragment {
     private LineChart lineChartTemperature;
     private LineChart lineChartHumidity;
     private CellarViewModel cellarViewModel;
+    private String roomName;
+
+    private float maxLimitCo2;
+    private float maxLimitTemp;
+    private float maxLimitHum;
+    private float minLimitCo2;
+    private float minLimitTemp;
+    private float minLimitHum;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -53,10 +62,29 @@ public class DailyFragment extends Fragment {
         lineChartTemperature = rootView.findViewById(R.id.lineChartTemperatureDaily);
         lineChartHumidity = rootView.findViewById(R.id.lineChartHumidityDaily);
 
+        SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        if (savedInstanceState == null) {
+            Bundle extras = this.getActivity().getIntent().getExtras();
+            if (extras == null) {
+                roomName = null;
+            } else {
+                roomName = (String) extras.getSerializable("RoomName");
+            }
+        } else {
+            roomName = (String)savedInstanceState.getSerializable("RoomName");
+        }
 
         cellarViewModel = ViewModelProviders.of(this).get(CellarViewModel.class);
-        SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPreferences", MODE_PRIVATE);
         String id = prefs.getString("cellarID", null);
+
+        maxLimitCo2 = Float.parseFloat(prefs.getString("Co2MaxRange" + roomName, "40"));
+        maxLimitTemp = Float.parseFloat(prefs.getString("TempMaxRange" + roomName, "40"));
+        maxLimitHum = Float.parseFloat(prefs.getString("HumMaxRange" + roomName, "40"));
+        minLimitCo2 = Float.parseFloat(prefs.getString("Co2MinRange" + roomName, "10"));
+        minLimitTemp = Float.parseFloat(prefs.getString("TempMinRange" + roomName, "10"));
+        minLimitHum = Float.parseFloat(prefs.getString("HumMinRange" + roomName, "10"));
+
+        String min = prefs.getString("cellarID", null);
         cellarViewModel.getAllDailyMeasurements("basement",id);
         cellarViewModel.getDailyMeasurementsLiveData().observe(this.getActivity(), new Observer<Measurements>() {
             @Override
@@ -68,9 +96,6 @@ public class DailyFragment extends Fragment {
                 for (Co2 co2:measurements.getCo2List()) {
                     co2EntriesDaily.add(new Entry(co2.getDate().getTime(),co2.getValue().floatValue()));
                 }
-               /* co2EntriesDaily.add(new Entry(1576555200000l,40));
-                co2EntriesDaily.add(new Entry(1576558800000l,50));
-                co2EntriesDaily.add(new Entry(1576562400000l,60));*/
                 for (Temperature temperature:measurements.getTemperatureList()) {
                     temperatureEntriesDaily.add(new Entry(temperature.getDate().getTime(),temperature.getValue().floatValue()));
                 }
@@ -96,79 +121,19 @@ public class DailyFragment extends Fragment {
                     }
                 });
 
-                createLineChartCo2(lineChartCo2,co2EntriesDaily,co2EntriesDaily.get(co2EntriesDaily.size()-1).getX(), co2EntriesDaily.get(0).getX());
-                createLineChartTemperature(lineChartTemperature,temperatureEntriesDaily,temperatureEntriesDaily.get(temperatureEntriesDaily.size()-1).getX(),temperatureEntriesDaily.get(0).getX());
-                createLineChartHumidity(lineChartHumidity,humidityEntriesDaily,humidityEntriesDaily.get(humidityEntriesDaily.size()-1).getX(),humidityEntriesDaily.get(0).getX());
+                if(co2EntriesDaily.size()>0) {
+                    createLineChartCo2(lineChartCo2, co2EntriesDaily, co2EntriesDaily.get(co2EntriesDaily.size() - 1).getX(), co2EntriesDaily.get(0).getX());
+                }
+               if(temperatureEntriesDaily.size()>0) {
+                   createLineChartTemperature(lineChartTemperature, temperatureEntriesDaily, temperatureEntriesDaily.get(temperatureEntriesDaily.size() - 1).getX(), temperatureEntriesDaily.get(0).getX());
+               }
+               if(humidityEntriesDaily.size()>0) {
+                   createLineChartHumidity(lineChartHumidity, humidityEntriesDaily, humidityEntriesDaily.get(humidityEntriesDaily.size() - 1).getX(), humidityEntriesDaily.get(0).getX());
+               }
             }
         });
 
         return rootView;
-    }
-
-    private ArrayList<Entry> getValuesCo2(){
-
-        ArrayList<Entry> entries = new ArrayList<>();
-
-        entries.add(new Entry(0, 250));
-        entries.add(new Entry(1, 250));
-        entries.add(new Entry(2, 250));
-        entries.add(new Entry(3, 250));
-        entries.add(new Entry(4, 250));
-        entries.add(new Entry(5, 250));
-        entries.add(new Entry(6, 250));
-        entries.add(new Entry(7, 1500));
-        entries.add(new Entry(8, 1250));
-        entries.add(new Entry(9, 1000));
-        entries.add(new Entry(10, 4000));
-        entries.add(new Entry(11, 5000));
-        entries.add(new Entry(12, 900));
-        entries.add(new Entry(13, 400));
-        entries.add(new Entry(14, 600));
-        entries.add(new Entry(15, 300));
-        entries.add(new Entry(16, 600));
-        entries.add(new Entry(17, 150));
-        entries.add(new Entry(18, 1000));
-        entries.add(new Entry(19, 550));
-        entries.add(new Entry(20, 780));
-        entries.add(new Entry(21, 920));
-        entries.add(new Entry(22, 390));
-        entries.add(new Entry(23, 230));
-
-        return entries;
-    }
-
-    private ArrayList<Entry> getValuesTemperature(){
-
-        ArrayList<Entry> entries = new ArrayList<>();
-
-        entries.add(new Entry(0, 12));
-        entries.add(new Entry(1, 18));
-        entries.add(new Entry(2, -15));
-        entries.add(new Entry(3, 10));
-        entries.add(new Entry(4, 20));
-        entries.add(new Entry(5, 11));
-        entries.add(new Entry(6, 24));
-        entries.add(new Entry(7, 20));
-        entries.add(new Entry(8, 11));
-        entries.add(new Entry(9, 24));
-        entries.add(new Entry(10, 10));
-
-        return entries;
-    }
-
-    private ArrayList<Entry> getValuesHumidity(){
-
-        ArrayList<Entry> entries = new ArrayList<>();
-
-        entries.add(new Entry(0, 90));
-        entries.add(new Entry(1, 30));
-        entries.add(new Entry(2, 15));
-        entries.add(new Entry(3, 40));
-        entries.add(new Entry(4, 40));
-        entries.add(new Entry(5, 60));
-        entries.add(new Entry(6, 35));
-
-        return entries;
     }
 
     private void createLineChartCo2(LineChart lineChartCo2, ArrayList<Entry> valuesCo2, float max, float min){
@@ -186,7 +151,7 @@ public class DailyFragment extends Fragment {
         llXAxis.setTextSize(10f);
         llXAxis.setTextColor(Color.WHITE);
 
-        LimitLine ll1 = new LimitLine(1000f, "MAX");
+        LimitLine ll1 = new LimitLine(maxLimitCo2, "MAX");
         ll1.setLineWidth(2f);
         ll1.setLineColor(Color.WHITE);
         ll1.enableDashedLine(10f, 10f, 0f);
@@ -194,7 +159,7 @@ public class DailyFragment extends Fragment {
         ll1.setTextSize(10f);
         ll1.setTextColor(Color.WHITE);
 
-        LimitLine ll2 = new LimitLine(250f, "MIN");
+        LimitLine ll2 = new LimitLine(minLimitCo2, "MIN");
         ll2.setLineWidth(2f);
         ll2.setLineColor(Color.WHITE);
         ll2.enableDashedLine(10f, 10f, 0f);
@@ -291,7 +256,7 @@ public class DailyFragment extends Fragment {
         llXAxis.setTextSize(10f);
         llXAxis.setTextColor(Color.WHITE);
 
-        LimitLine ll1 = new LimitLine(20f, "MAX");
+        LimitLine ll1 = new LimitLine(maxLimitTemp, "MAX");
         ll1.setLineWidth(2f);
         ll1.setLineColor(Color.WHITE);
         ll1.enableDashedLine(10f, 10f, 0f);
@@ -299,7 +264,7 @@ public class DailyFragment extends Fragment {
         ll1.setTextSize(10f);
         ll1.setTextColor(Color.WHITE);
 
-        LimitLine ll2 = new LimitLine(-10f, "MIN");
+        LimitLine ll2 = new LimitLine(minLimitTemp, "MIN");
         ll2.setLineWidth(2f);
         ll2.setLineColor(Color.WHITE);
         ll2.enableDashedLine(10f, 10f, 0f);
@@ -385,7 +350,7 @@ public class DailyFragment extends Fragment {
         llXAxis.setTextSize(10f);
         llXAxis.setTextColor(Color.WHITE);
 
-        LimitLine ll1 = new LimitLine(60f, "MAX");
+        LimitLine ll1 = new LimitLine(maxLimitHum, "MAX");
         ll1.setLineWidth(2f);
         ll1.setLineColor(Color.WHITE);
         ll1.enableDashedLine(10f, 10f, 0f);
@@ -393,7 +358,7 @@ public class DailyFragment extends Fragment {
         ll1.setTextSize(10f);
         ll1.setTextColor(Color.WHITE);
 
-        LimitLine ll2 = new LimitLine(30f, "MIN");
+        LimitLine ll2 = new LimitLine(minLimitHum, "MIN");
         ll2.setLineWidth(2f);
         ll2.setLineColor(Color.WHITE);
         ll2.enableDashedLine(10f, 10f, 0f);
