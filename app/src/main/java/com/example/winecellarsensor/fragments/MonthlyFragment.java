@@ -61,9 +61,6 @@ public class MonthlyFragment extends Fragment {
     private float minLimitTemp;
     private float minLimitHum;
 
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
@@ -99,7 +96,6 @@ public class MonthlyFragment extends Fragment {
 
         cellarViewModel = ViewModelProviders.of(this).get(CellarViewModel.class);
 
-
         cellarViewModel.getAllMonthlyMeasurements("basement",id);
         cellarViewModel.getMonthlyMeasurementsLiveData().observe(this.getActivity(), new Observer<Measurements>() {
             @Override
@@ -110,10 +106,7 @@ public class MonthlyFragment extends Fragment {
 
                 for (Co2 co2:measurements.getCo2List()) {
                     co2EntriesMonthly.add(new Entry(co2.getDate().getTime(),co2.getValue().floatValue()));
-                    Log.i("Adika", co2.getDate().toString() +", "+ co2.getDate().getTime());
                 }
-
-
 
                 for (Temperature temperature:measurements.getTemperatureList()) {
                     temperatureEntriesMonthly.add(new Entry(temperature.getDate().getTime(),temperature.getValue().floatValue()));

@@ -140,7 +140,6 @@ public class DailyFragment extends Fragment {
 
         Description descriptionCo2 = new Description();
         descriptionCo2.setText("Co2");
-       // descriptionCo2.setYOffset(20f);
         descriptionCo2.setTextSize(20);
         descriptionCo2.setTextColor(Color.WHITE);
 
@@ -230,15 +229,6 @@ public class DailyFragment extends Fragment {
         legendCo2.setFormSize(10f);
         legendCo2.setXEntrySpace(5f);
         legendCo2.setFormToTextSpace(10f);
-
-         /* LegendEntry[] entriesCo2 = new LegendEntry[7];
-
-        for(int i= 0;i<=entriesCo2.length;i++){
-            LegendEntry entryCo2 = new LegendEntry();
-            entryCo2.formColor = Color.GREEN;
-            entriesCo2[i] = entryCo2;
-        }
-        legendCo2.setCustom(entriesCo2);*/
 
     }
 

@@ -49,13 +49,11 @@ public class ContactFragment extends Fragment {
         startActivity(intent);
     }
 
-
     public void makeCall(View view) {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_APP_CONTACTS);
         startActivity(intent);
     }
-
 
     public void sendEmail(View view) {
         Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -63,7 +61,4 @@ public class ContactFragment extends Fragment {
         startActivity(intent);
 
     }
-
-
-
 }
