@@ -90,42 +90,48 @@ public class WeeklyFragment extends Fragment {
         cellarViewModel.getWeeklyMeasurementsLiveData().observe(this.getActivity(), new Observer<Measurements>() {
             @Override
                 public void onChanged(Measurements measurements) {
-                    ArrayList<Entry> co2EntriesWeekly = new ArrayList<>();
-                    ArrayList<Entry> temperatureEntriesWeekly = new ArrayList<>();
-                    ArrayList<Entry> humidityEntriesWeekly = new ArrayList<>();
+                ArrayList<Entry> co2EntriesWeekly = new ArrayList<>();
+                ArrayList<Entry> temperatureEntriesWeekly = new ArrayList<>();
+                ArrayList<Entry> humidityEntriesWeekly = new ArrayList<>();
 
-                    for (Co2 co2:measurements.getCo2List()) {
-                        co2EntriesWeekly.add(new Entry(co2.getDate().getTime(),co2.getValue().floatValue()));
-                    }
+                for (Co2 co2 : measurements.getCo2List()) {
+                    co2EntriesWeekly.add(new Entry(co2.getDate().getTime(), co2.getValue().floatValue()));
+                }
 
-                    for (Temperature temperature:measurements.getTemperatureList()) {
-                        temperatureEntriesWeekly.add(new Entry(temperature.getDate().getTime(),temperature.getValue().floatValue()));
-                    }
+                for (Temperature temperature : measurements.getTemperatureList()) {
+                    temperatureEntriesWeekly.add(new Entry(temperature.getDate().getTime(), temperature.getValue().floatValue()));
+                }
 
-                    for (Humidity humidity:measurements.getHumidityList()) {
-                        humidityEntriesWeekly.add(new Entry(humidity.getDate().getTime(),humidity.getValue().floatValue()));
-                    }
-                    Collections.sort(co2EntriesWeekly, new Comparator<Entry>() {
-                        @Override
-                        public int compare(Entry o1, Entry o2) {
-                            return Float.compare(o1.getX(),o2.getX());
-                        }
-                    });
-                    Collections.sort(temperatureEntriesWeekly, new Comparator<Entry>() {
-                        @Override
-                        public int compare(Entry o1, Entry o2) {
-                            return Float.compare(o1.getX(),o2.getX());
-                        }
-                    });
-                    Collections.sort(humidityEntriesWeekly, new Comparator<Entry>() {
+                for (Humidity humidity : measurements.getHumidityList()) {
+                    humidityEntriesWeekly.add(new Entry(humidity.getDate().getTime(), humidity.getValue().floatValue()));
+                }
+                Collections.sort(co2EntriesWeekly, new Comparator<Entry>() {
                     @Override
                     public int compare(Entry o1, Entry o2) {
-                        return Float.compare(o1.getX(),o2.getX());
+                        return Float.compare(o1.getX(), o2.getX());
                     }
                 });
-                createLineChartCo2(lineChartCo2,co2EntriesWeekly,co2EntriesWeekly.get(co2EntriesWeekly.size()-1).getX(),co2EntriesWeekly.get(0).getX());
-                createLineChartTemperature(lineChartTemperature,temperatureEntriesWeekly,temperatureEntriesWeekly.get(temperatureEntriesWeekly.size()-1).getX(),temperatureEntriesWeekly.get(0).getX());
-                createLineChartHumidity(lineChartHumidity,humidityEntriesWeekly,humidityEntriesWeekly.get(humidityEntriesWeekly.size()-1).getX(),humidityEntriesWeekly.get(0).getX());
+                Collections.sort(temperatureEntriesWeekly, new Comparator<Entry>() {
+                    @Override
+                    public int compare(Entry o1, Entry o2) {
+                        return Float.compare(o1.getX(), o2.getX());
+                    }
+                });
+                Collections.sort(humidityEntriesWeekly, new Comparator<Entry>() {
+                    @Override
+                    public int compare(Entry o1, Entry o2) {
+                        return Float.compare(o1.getX(), o2.getX());
+                    }
+                });
+                if (co2EntriesWeekly.size() > 0){
+                    createLineChartCo2(lineChartCo2, co2EntriesWeekly, co2EntriesWeekly.get(co2EntriesWeekly.size() - 1).getX(), co2EntriesWeekly.get(0).getX());
+            }
+                if (temperatureEntriesWeekly.size() > 0) {
+                    createLineChartTemperature(lineChartTemperature, temperatureEntriesWeekly, temperatureEntriesWeekly.get(temperatureEntriesWeekly.size() - 1).getX(), temperatureEntriesWeekly.get(0).getX());
+                }
+                if (humidityEntriesWeekly.size() > 0){
+                    createLineChartHumidity(lineChartHumidity, humidityEntriesWeekly, humidityEntriesWeekly.get(humidityEntriesWeekly.size() - 1).getX(), humidityEntriesWeekly.get(0).getX());
+            }
             }
         });
         return rootView;

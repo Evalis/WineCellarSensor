@@ -142,10 +142,15 @@ public class MonthlyFragment extends Fragment {
                 });
 
 
-
-        createLineChartCo2(lineChartCo2,co2EntriesMonthly,co2EntriesMonthly.get(co2EntriesMonthly.size()-1).getX(),co2EntriesMonthly.get(0).getX());
-        createLineChartTemperature(lineChartTemperature,temperatureEntriesMonthly,temperatureEntriesMonthly.get(temperatureEntriesMonthly.size()-1).getX(),temperatureEntriesMonthly.get(0).getX());
-        createLineChartHumidity(lineChartHumidity,humidityEntriesMonthly,humidityEntriesMonthly.get(humidityEntriesMonthly.size()-1).getX(),humidityEntriesMonthly.get(0).getX());
+                if(co2EntriesMonthly.size()>0) {
+                    createLineChartCo2(lineChartCo2, co2EntriesMonthly, co2EntriesMonthly.get(co2EntriesMonthly.size() - 1).getX(), co2EntriesMonthly.get(0).getX());
+                }
+                if(temperatureEntriesMonthly.size()>0) {
+                    createLineChartTemperature(lineChartTemperature, temperatureEntriesMonthly, temperatureEntriesMonthly.get(temperatureEntriesMonthly.size() - 1).getX(), temperatureEntriesMonthly.get(0).getX());
+                }
+                if(humidityEntriesMonthly.size()>0) {
+                    createLineChartHumidity(lineChartHumidity, humidityEntriesMonthly, humidityEntriesMonthly.get(humidityEntriesMonthly.size() - 1).getX(), humidityEntriesMonthly.get(0).getX());
+                }
             }
         });
         return rootView;
