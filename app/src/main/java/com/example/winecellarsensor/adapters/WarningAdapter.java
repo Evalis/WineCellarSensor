@@ -57,7 +57,7 @@ public class WarningAdapter extends RecyclerView.Adapter<WarningAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+   public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView roomName, dateTime, dateTimeValue, sensorId, sensorIdValue,
                 valueTV, value, minValueTV, minValue, maxValueTV, maxValue;

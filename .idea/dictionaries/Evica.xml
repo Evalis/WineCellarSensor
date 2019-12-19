@@ -2,6 +2,7 @@
   <dictionary name="Evica">
     <words>
       <w>mvvm</w>
+      <w>robolectric</w>
     </words>
   </dictionary>
 </component>

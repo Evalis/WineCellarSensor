@@ -117,7 +117,7 @@ public class HomeFragment extends Fragment implements RoomAdapter.OnListItemClic
             {
                 Warning warning = new Warning(rooms.get(i).getRoomName(), Temperature.TYPE, rooms.get(i).getTemperature().getDate(),  tempMin, tempMax, currentTemp);
                 showDialog(warning);
-saveToLogWarning(warning);            }
+                saveToLogWarning(warning);            }
 
             if(currentHum <= humMin || currentHum >= humMax)
             {
